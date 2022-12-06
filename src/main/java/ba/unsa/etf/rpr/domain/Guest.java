@@ -6,7 +6,7 @@ import java.util.Objects;
  * Holds guest details
  * @author Eldar Babič
  */
-public class Guests {
+public class Guest {
     private int guestId;
     private String firstName;
     private String lastName;
@@ -31,9 +31,9 @@ public class Guests {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Guests)) return false;
-        Guests guests = (Guests) o;
-        return getGuestId() == guests.getGuestId() && getFirstName().equals(guests.getFirstName()) && getLastName().equals(guests.getLastName()) && getCity().equals(guests.getCity()) && getCountry().equals(guests.getCountry()) && Objects.equals(getEmail(), guests.getEmail()) && getPhone().equals(guests.getPhone());
+        if (!(o instanceof Guest)) return false;
+        Guest guest = (Guest) o;
+        return getGuestId() == guest.getGuestId() && getFirstName().equals(guest.getFirstName()) && getLastName().equals(guest.getLastName()) && getCity().equals(guest.getCity()) && getCountry().equals(guest.getCountry()) && Objects.equals(getEmail(), guest.getEmail()) && getPhone().equals(guest.getPhone());
     }
 
     @Override

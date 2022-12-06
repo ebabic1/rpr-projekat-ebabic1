@@ -7,7 +7,7 @@ import java.util.Objects;
  * Holds every room reservation
  * @author  Eldar Babić
  */
-public class Reservations {
+public class Reservation {
     private int reservationId;
     private Date arrivalDate;
     private Date leaveDate;
@@ -32,8 +32,8 @@ public class Reservations {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Reservations)) return false;
-        Reservations booking = (Reservations) o;
+        if (!(o instanceof Reservation)) return false;
+        Reservation booking = (Reservation) o;
         return getReservationId() == booking.getReservationId() && Double.compare(booking.getPaymentAmount(), getPaymentAmount()) == 0 && getGuestId() == booking.getGuestId() && getRoomId() == booking.getRoomId() && getArrivalDate().equals(booking.getArrivalDate()) && getLeaveDate().equals(booking.getLeaveDate()) && getAdditionalInfo().equals(booking.getAdditionalInfo());
     }
 

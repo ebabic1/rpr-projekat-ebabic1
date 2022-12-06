@@ -6,7 +6,7 @@ import java.util.Objects;
  Holds all hotel rooms
  @author Eldar Babić
  */
-public class Rooms {
+public class Room {
     private int roomId;
     private int maxPersons;
 
@@ -21,9 +21,9 @@ public class Rooms {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Rooms)) return false;
-        Rooms rooms = (Rooms) o;
-        return getRoomId() == rooms.getRoomId() && getMaxPersons() == rooms.getMaxPersons();
+        if (!(o instanceof Room)) return false;
+        Room room = (Room) o;
+        return getRoomId() == room.getRoomId() && getMaxPersons() == room.getMaxPersons();
     }
 
     @Override
