@@ -4,6 +4,7 @@ import ba.unsa.etf.rpr.domain.Guest;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 import java.util.Properties;
@@ -30,16 +31,9 @@ public class GuestDaoSQLImplementation implements GuestDao{
             stmt.setInt(1,id);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()){
-                Guest guest = new Guest();
-                guest.setGuestId(id);
-                guest.setCity(resultSet.getString("city"));
-                guest.setCountry(resultSet.getString("country"));
-                guest.setEmail(resultSet.getString("email"));
-                guest.setPhone(resultSet.getString("phone"));
-                guest.setFirstName(resultSet.getString("firstName"));
-                guest.setLastName(resultSet.getString("lastName"));
+                Guest g = makeNewGuest(resultSet);
                 resultSet.close();
-                return guest;
+                return g;
             }
             return null;
 
@@ -52,6 +46,10 @@ public class GuestDaoSQLImplementation implements GuestDao{
     @Override
     public Guest add(Guest item) {
         String query = "INSERT INTO Guests (firstName,lastName,city,country,email,phone) VALUES (?,?,?,?,NULL,?)";
+        return getGuest(item, query);
+    }
+
+    private Guest getGuest(Guest item, String query) {
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1,item.getFirstName());
@@ -62,33 +60,79 @@ public class GuestDaoSQLImplementation implements GuestDao{
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return item;
     }
 
     @Override
     public Guest update(Guest item) {
-        return null;
+        String query = "UPDATE Guests SET guestId = ?, SET firstName = ?, SET lastName = ?, SET city = ?, SET country = ?, SET email = ?, SET phone = ?";
+        return getGuest(item, query);
     }
 
     @Override
     public void delete(int id) {
+        String query = "DELETE FROM Guests WHERE guestId = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1,id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public List<Guest> getAll() {
-        return null;
+        List<Guest> guestList = new ArrayList<>();
+        String query = "SELECT * FROM Guests";
+        return getGuests(guestList, query);
+
+    }
+
+    private Guest makeNewGuest(ResultSet resultSet) throws SQLException {
+        Guest guest = new Guest();
+        guest.setGuestId(resultSet.getInt("guestId"));
+        guest.setCity(resultSet.getString("city"));
+        guest.setCountry(resultSet.getString("country"));
+        guest.setEmail(resultSet.getString("email"));
+        guest.setPhone(resultSet.getString("phone"));
+        guest.setFirstName(resultSet.getString("firstName"));
+        guest.setLastName(resultSet.getString("lastName"));
+        return guest;
     }
 
     @Override
-    public List<Guest> searchByCity(String cityName) {
-        return null;
+    public List<Guest> searchByCity(String cityName)
+    {
+        List<Guest> guestList = new ArrayList<>();
+        String query = "SELECT * FROM Guests WHERE city = 'cityName'";
+        return getGuests(guestList, query);
     }
 
     @Override
     public List<Guest> searchByCountry(String countryName) {
+        List<Guest> guestList = new ArrayList<>();
+        String query = "SELECT * FROM Guests WHERE country = 'countryName'";
+        return getGuests(guestList, query);
+    }
+
+    private List<Guest> getGuests(List<Guest> guestList, String query) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()){
+                Guest guest;
+                guestList.add(makeNewGuest(resultSet));
+            }
+            resultSet.close();
+            return guestList;
+
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
