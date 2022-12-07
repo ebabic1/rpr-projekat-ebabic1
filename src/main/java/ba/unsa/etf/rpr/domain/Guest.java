@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * Holds guest details
- * @author Eldar Babič
+ * @author Eldar Babić
  */
 public class Guest {
     private int guestId;

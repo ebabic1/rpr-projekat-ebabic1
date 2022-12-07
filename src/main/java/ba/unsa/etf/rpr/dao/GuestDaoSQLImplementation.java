@@ -2,6 +2,8 @@ package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Guest;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.sql.*;
 import java.util.Properties;
@@ -12,18 +14,21 @@ public class GuestDaoSQLImplementation implements GuestDao{
     public GuestDaoSQLImplementation(){
         try {
             final Properties login = new Properties();
-            connection = DriverManager.getConnection(login.getProperty("connection_string"), login.getProperty("username"), login.getProperty("password"));
+            login.load(new FileInputStream("src/main/java/ba/unsa/etf/rpr/login.properties"));
+            connection = DriverManager.getConnection(login.getProperty("connection.string"), login.getProperty("username"), login.getProperty("password"));
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     @Override
     public Guest getById(int id) {
-        String query = "SELECT * FROM Guests WHERE id = ?";
+        String query = "SELECT * FROM Guests WHERE guestId = ?";
         try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1,id);
-            ResultSet resultSet = statement.executeQuery();
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1,id);
+            ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()){
                 Guest guest = new Guest();
                 guest.setGuestId(id);
@@ -46,7 +51,20 @@ public class GuestDaoSQLImplementation implements GuestDao{
 
     @Override
     public Guest add(Guest item) {
-        return null;
+        String query = "INSERT INTO Guests (firstName,lastName,city,country,email,phone) VALUES (?,?,?,?,NULL,?)";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1,item.getFirstName());
+            stmt.setString(2,item.getLastName());
+            stmt.setString(3,item.getCity());
+            stmt.setString(4,item.getCountry());
+            stmt.setString(5,item.getPhone());
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return item;
     }
 
     @Override
