@@ -1,17 +1,17 @@
 package ba.unsa.etf.rpr.dao;
 
-import ba.unsa.etf.rpr.domain.Rooms;
+import ba.unsa.etf.rpr.domain.Room;
 
 import java.util.List;
 
 /**
  * Dao interface for Room bean
  */
-public interface RoomDao<Rooms> extends Dao<Rooms> {
+public interface RoomDao<Room> extends Dao<Room> {
     /**
      * Returns list of rooms of given capacity
      * @param maxPersons - room capacity
      * @return list of rooms
      */
-    List<Rooms> searchByMaxPersons(int maxPersons);
+    List<Room> searchByMaxPersons(int maxPersons);
 }
