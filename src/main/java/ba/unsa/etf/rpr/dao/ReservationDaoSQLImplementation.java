@@ -47,7 +47,7 @@ public class ReservationDaoSQLImplementation implements ReservationDao{
         Reservation reservation = new Reservation();
         reservation.setReservationId(resultSet.getInt("reservationId"));
         reservation.setArrivalDate(resultSet.getDate("arrivalDate"));
-        reservation.setLeaveDate(resultSet.getDate("leaveData"));
+        reservation.setLeaveDate(resultSet.getDate("leaveDate"));
         reservation.setAdditionalInfo(resultSet.getString("additionalInfo"));
         reservation.setRoomId(resultSet.getInt("roomId"));
         reservation.setGuestId(resultSet.getInt("guestId"));
@@ -76,7 +76,7 @@ public class ReservationDaoSQLImplementation implements ReservationDao{
 
     @Override
     public Reservation update(Reservation item) {
-        String query = "UPDATE Reservations SET arrivalDate = ?, set leaveDate = ?, SET paymentAmount = ?, SET additionalInfo = ?, SET guestId = ?, set roomId = ? WHERE reservationId = ?";
+        String query = "UPDATE Reservations SET arrivalDate = str_to_date(?,'%Y-%m-%d'),  leaveDate = str_to_date(?,'%Y-%m-%d'),  paymentAmount = ?,  additionalInfo = ?,  guestId = ?,  roomId = ? WHERE reservationId = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setDate(1, item.getArrivalDate());
