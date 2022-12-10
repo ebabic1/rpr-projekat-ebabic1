@@ -67,8 +67,22 @@ public class GuestDaoSQLImplementation implements GuestDao{
 
     @Override
     public Guest update(Guest item) {
-        String query = "UPDATE Guests SET guestId = ?, SET firstName = ?, SET lastName = ?, SET city = ?, SET country = ?, SET email = ?, SET phone = ?";
-        return getGuest(item, query);
+        String query = "UPDATE Guests  SET firstName = ?, SET lastName = ?, SET city = ?, SET country = ?, SET email = ?, SET phone = ? WHERE guestId = ";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1,item.getFirstName());
+            stmt.setString(2,item.getLastName());
+            stmt.setString(3,item.getCity());
+            stmt.setString(4,item.getCountry());
+            stmt.setString(5,item.getEmail());
+            stmt.setString(6,item.getPhone());
+            stmt.setInt(7,item.getGuestId());
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return item;
     }
 
     @Override
