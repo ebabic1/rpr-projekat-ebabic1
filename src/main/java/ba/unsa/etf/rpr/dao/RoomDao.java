@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Dao interface for Room bean
  */
-public interface RoomDao<Room> extends Dao<Room> {
+public interface RoomDao extends Dao<Room> {
     /**
      * Returns list of rooms of given capacity
      * @param maxPersons - room capacity
