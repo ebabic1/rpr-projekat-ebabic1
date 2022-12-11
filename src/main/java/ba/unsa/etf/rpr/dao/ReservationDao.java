@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface ReservationDao extends Dao<Reservation> {
     /**
-     * Lists out all reservations made duringa a date range
+     * Lists out all reservations made during a date range
      * @param startDate - starting date
      * @param endDate - ending date
      * @return List of dates

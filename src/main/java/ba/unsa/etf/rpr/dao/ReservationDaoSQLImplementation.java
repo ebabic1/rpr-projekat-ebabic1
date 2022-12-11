@@ -114,7 +114,6 @@ public class ReservationDaoSQLImplementation implements ReservationDao{
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()){
-
                 reservationList.add(setReservation(resultSet));
             }
             resultSet.close();
@@ -130,7 +129,8 @@ public class ReservationDaoSQLImplementation implements ReservationDao{
     @Override
     public List<Reservation> searchByDateRange(java.sql.Date startDate, java.sql.Date endDate) {
         List<Reservation> reservationList = new ArrayList<>();
-        String query = "SELECT * FROM Reservations WHERE arrivalDate > to_date('" + startDate.toString()+"',yyyy-mm-dd) AND leaveDate < to_date( '" + endDate.toString() + "',yyyy-mm-dd)" ;
+        String query = "SELECT * FROM Reservations WHERE arrivalDate > str_to_date('"+startDate.toString()+"',%Y-%m-%d) AND leaveDate < str_to_date('"+endDate.toString()+"',%Y-%m-%d)" ;
+        System.out.println(query);
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet resultSet = stmt.executeQuery();
