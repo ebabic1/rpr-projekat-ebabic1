@@ -1,30 +1,28 @@
 package ba.unsa.etf.rpr;
-
-import ba.unsa.etf.rpr.dao.GuestDaoSQLImplementation;
-import ba.unsa.etf.rpr.dao.ReservationDaoSQLImplementation;
-import ba.unsa.etf.rpr.dao.RoomDaoSQLImplementation;
-import ba.unsa.etf.rpr.domain.Guest;
-import ba.unsa.etf.rpr.domain.Reservation;
-
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Properties;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 /**
  * Hello world!
  *
  */
-public class App 
+public class App extends Application
 {
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        stage.show();
+    }
     public static void main( String[] args )
     {
-        Connection connection;
+        launch();
+        /*Connection connection;
         try {
             final Properties login = new Properties();
             login.load(new FileInputStream("src/main/java/ba/unsa/etf/rpr/login.properties"));
@@ -51,13 +49,6 @@ public class App
             PreparedStatement stmt9= connection.prepareStatement("DELETE FROM  Guests");
             PreparedStatement stmt10 = connection.prepareStatement("DELETE FROM Rooms");
             PreparedStatement stmt8 = connection.prepareStatement("DELETE FROM  Reservations");
-            ReservationDaoSQLImplementation resDao = new ReservationDaoSQLImplementation();
-
-            java.util.Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse("2002-01-01");
-            java.util.Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse("2004-01-01");
-            for(Reservation res : resDao.searchByDateRange(new java.sql.Date(startDate.getTime()),new java.sql.Date(endDate.getTime()))) {
-                System.out.println(res);
-            }
             stmt8.executeUpdate();
             stmt9.executeUpdate();
             stmt10.executeUpdate();
@@ -69,8 +60,6 @@ public class App
             e.printStackTrace();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        }*/
     }
 }
