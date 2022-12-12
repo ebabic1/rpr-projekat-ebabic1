@@ -15,11 +15,20 @@ public class User {
     private String email;
     private String phone;
     private String password;
+    private int admin;
+
+    public int getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(int admin) {
+        this.admin = admin;
+    }
 
     @Override
     public String toString() {
         return "User{" +
-                "guestId=" + userId +
+                "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", city='" + city + '\'' +
@@ -27,6 +36,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
+                ", admin=" + admin +
                 '}';
     }
 
@@ -34,12 +44,12 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User user)) return false;
-        return getUserId() == user.getUserId() && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getCity(), user.getCity()) && Objects.equals(getCountry(), user.getCountry()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPhone(), user.getPhone()) && Objects.equals(getPassword(), user.getPassword());
+        return getUserId() == user.getUserId() && getAdmin() == user.getAdmin() && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getCity(), user.getCity()) && Objects.equals(getCountry(), user.getCountry()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPhone(), user.getPhone()) && Objects.equals(getPassword(), user.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getFirstName(), getLastName(), getCity(), getCountry(), getEmail(), getPhone(), getPassword());
+        return Objects.hash(getUserId(), getFirstName(), getLastName(), getCity(), getCountry(), getEmail(), getPhone(), getPassword(), getAdmin());
     }
 
     public int getUserId() {
