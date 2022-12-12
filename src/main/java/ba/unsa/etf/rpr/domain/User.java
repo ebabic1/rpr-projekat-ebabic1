@@ -6,47 +6,48 @@ import java.util.Objects;
  * Holds guest details
  * @author Eldar Babić
  */
-public class Guest {
-    private int guestId;
+public class User {
+    private int userId;
     private String firstName;
     private String lastName;
     private String city;
     private String country;
     private String email;
     private String phone;
+    private String password;
 
     @Override
     public String toString() {
-        return "Guests{" +
-                "guestId=" + guestId +
+        return "User{" +
+                "guestId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Guest)) return false;
-        Guest guest = (Guest) o;
-        return getGuestId() == guest.getGuestId() && getFirstName().equals(guest.getFirstName()) && getLastName().equals(guest.getLastName()) && getCity().equals(guest.getCity()) && getCountry().equals(guest.getCountry()) && Objects.equals(getEmail(), guest.getEmail()) && getPhone().equals(guest.getPhone());
+        if (!(o instanceof User user)) return false;
+        return getUserId() == user.getUserId() && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getCity(), user.getCity()) && Objects.equals(getCountry(), user.getCountry()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPhone(), user.getPhone()) && Objects.equals(getPassword(), user.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getGuestId(), getFirstName(), getLastName(), getCity(), getCountry(), getEmail(), getPhone());
+        return Objects.hash(getUserId(), getFirstName(), getLastName(), getCity(), getCountry(), getEmail(), getPhone(), getPassword());
     }
 
-    public int getGuestId() {
-        return guestId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setGuestId(int guestId) {
-        this.guestId = guestId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -95,5 +96,13 @@ public class Guest {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

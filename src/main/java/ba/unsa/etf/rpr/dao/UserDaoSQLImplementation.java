@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.dao;
 
-import ba.unsa.etf.rpr.domain.Guest;
+import ba.unsa.etf.rpr.domain.User;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,10 +9,10 @@ import java.util.List;
 import java.sql.*;
 import java.util.Properties;
 
-public class GuestDaoSQLImplementation implements GuestDao {
+public class UserDaoSQLImplementation implements UserDao {
     private Connection connection;
 
-    public GuestDaoSQLImplementation(){
+    public UserDaoSQLImplementation(){
         try {
             final Properties login = new Properties();
             login.load(new FileInputStream("src/main/java/ba/unsa/etf/rpr/login.properties"));
@@ -24,14 +24,14 @@ public class GuestDaoSQLImplementation implements GuestDao {
         }
     }
     @Override
-    public Guest getById(int id) {
-        String query = "SELECT * FROM Guests WHERE guestId = ?";
+    public User getById(int id) {
+        String query = "SELECT * FROM Users WHERE userId = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1,id);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()){
-                Guest g = makeNewGuest(resultSet);
+                User g = makeNewUser(resultSet);
                 resultSet.close();
                 return g;
             }
@@ -44,12 +44,12 @@ public class GuestDaoSQLImplementation implements GuestDao {
     }
 
     @Override
-    public Guest add(Guest item) {
-        String query = "INSERT INTO Guests (firstName,lastName,city,country,email,phone) VALUES (?,?,?,?,NULL,?)";
-        return getGuest(item, query);
+    public User add(User item) {
+        String query = "INSERT INTO Users (firstName,lastName,city,country,email,phone,password) VALUES (?,?,?,?,NULL,?,?)";
+        return getUser(item, query);
     }
 
-    private Guest getGuest(Guest item, String query) {
+    private User getUser(User item, String query) {
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1,item.getFirstName());
@@ -57,6 +57,7 @@ public class GuestDaoSQLImplementation implements GuestDao {
             stmt.setString(3,item.getCity());
             stmt.setString(4,item.getCountry());
             stmt.setString(5,item.getPhone());
+            stmt.setString(6,item.getPassword());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -66,8 +67,8 @@ public class GuestDaoSQLImplementation implements GuestDao {
     }
 
     @Override
-    public Guest update(Guest item) {
-        String query = "UPDATE Guests  SET firstName = ?, SET lastName = ?, SET city = ?, SET country = ?, SET email = ?, SET phone = ? WHERE guestId = ";
+    public User update(User item) {
+        String query = "UPDATE Users  SET firstName = ?, SET lastName = ?, SET city = ?, SET country = ?, SET email = ?, SET phone = ?, SET password = ?, SET roleId = ? WHERE userId = ";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1,item.getFirstName());
@@ -76,7 +77,7 @@ public class GuestDaoSQLImplementation implements GuestDao {
             stmt.setString(4,item.getCountry());
             stmt.setString(5,item.getEmail());
             stmt.setString(6,item.getPhone());
-            stmt.setInt(7,item.getGuestId());
+            stmt.setString(7,item.getPassword());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -87,7 +88,7 @@ public class GuestDaoSQLImplementation implements GuestDao {
 
     @Override
     public void delete(int id) {
-        String query = "DELETE FROM Guests WHERE guestId = ?";
+        String query = "DELETE FROM Users WHERE userId = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1,id);
@@ -99,50 +100,50 @@ public class GuestDaoSQLImplementation implements GuestDao {
     }
 
     @Override
-    public List<Guest> getAll() {
-        List<Guest> guestList = new ArrayList<>();
-        String query = "SELECT * FROM Guests";
-        return getGuests(guestList, query);
+    public List<User> getAll() {
+        List<User> userList = new ArrayList<>();
+        String query = "SELECT * FROM Users";
+        return getUsers(userList, query);
 
     }
 
-    private Guest makeNewGuest(ResultSet resultSet) throws SQLException {
-        Guest guest = new Guest();
-        guest.setGuestId(resultSet.getInt("guestId"));
-        guest.setCity(resultSet.getString("city"));
-        guest.setCountry(resultSet.getString("country"));
-        guest.setEmail(resultSet.getString("email"));
-        guest.setPhone(resultSet.getString("phone"));
-        guest.setFirstName(resultSet.getString("firstName"));
-        guest.setLastName(resultSet.getString("lastName"));
-        return guest;
+    private User makeNewUser(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        user.setUserId(resultSet.getInt("userId"));
+        user.setCity(resultSet.getString("city"));
+        user.setCountry(resultSet.getString("country"));
+        user.setEmail(resultSet.getString("email"));
+        user.setPhone(resultSet.getString("phone"));
+        user.setFirstName(resultSet.getString("firstName"));
+        user.setLastName(resultSet.getString("lastName"));
+        return user;
     }
 
     @Override
-    public List<Guest> searchByCity(String cityName)
+    public List<User> searchByCity(String cityName)
     {
-        List<Guest> guestList = new ArrayList<>();
-        String query = "SELECT * FROM Guests WHERE city = 'cityName'";
-        return getGuests(guestList, query);
+        List<User> userList = new ArrayList<>();
+        String query = "SELECT * FROM Users WHERE city = 'cityName'";
+        return getUsers(userList, query);
     }
 
     @Override
-    public List<Guest> searchByCountry(String countryName) {
-        List<Guest> guestList = new ArrayList<>();
-        String query = "SELECT * FROM Guests WHERE country = 'countryName'";
-        return getGuests(guestList, query);
+    public List<User> searchByCountry(String countryName) {
+        List<User> userList = new ArrayList<>();
+        String query = "SELECT * FROM Users WHERE country = 'countryName'";
+        return getUsers(userList, query);
     }
 
-    private List<Guest> getGuests(List<Guest> guestList, String query) {
+    private List<User> getUsers(List<User> userList, String query) {
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()){
-                Guest guest;
-                guestList.add(makeNewGuest(resultSet));
+                User user;
+                userList.add(makeNewUser(resultSet));
             }
             resultSet.close();
-            return guestList;
+            return userList;
 
         }catch(SQLException e) {
             e.printStackTrace();
