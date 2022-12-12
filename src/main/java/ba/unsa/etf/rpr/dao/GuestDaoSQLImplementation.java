@@ -9,7 +9,7 @@ import java.util.List;
 import java.sql.*;
 import java.util.Properties;
 
-public class GuestDaoSQLImplementation implements GuestDao{
+public class GuestDaoSQLImplementation implements GuestDao {
     private Connection connection;
 
     public GuestDaoSQLImplementation(){
