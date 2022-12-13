@@ -16,6 +16,15 @@ public class User {
     private String phone;
     private String password;
     private int admin;
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public int getAdmin() {
         return admin;
@@ -37,6 +46,7 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
                 ", admin=" + admin +
+                ", username='" + username + '\'' +
                 '}';
     }
 
@@ -44,12 +54,12 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User user)) return false;
-        return getUserId() == user.getUserId() && getAdmin() == user.getAdmin() && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getCity(), user.getCity()) && Objects.equals(getCountry(), user.getCountry()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPhone(), user.getPhone()) && Objects.equals(getPassword(), user.getPassword());
+        return getUserId() == user.getUserId() && getAdmin() == user.getAdmin() && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getCity(), user.getCity()) && Objects.equals(getCountry(), user.getCountry()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPhone(), user.getPhone()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getUsername(), user.getUsername());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getFirstName(), getLastName(), getCity(), getCountry(), getEmail(), getPhone(), getPassword(), getAdmin());
+        return Objects.hash(getUserId(), getFirstName(), getLastName(), getCity(), getCountry(), getEmail(), getPhone(), getPassword(), getAdmin(), getUsername());
     }
 
     public int getUserId() {
