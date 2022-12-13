@@ -46,10 +46,12 @@ public class RoomDaoSQLImplementation implements RoomDao {
 
     @Override
     public Room add(Room item) {
-        String query = "INSERT INTO Rooms (maxPersons) VALUES (?)";
+        String query = "INSERT INTO Rooms (maxPersons, description, available) VALUES (?,?,?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1,  item.getMaxPersons());
+            stmt.setString(2,  item.getDescription());
+            stmt.setInt(3,item.getAvailable());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
