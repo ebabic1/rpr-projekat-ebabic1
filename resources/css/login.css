@@ -1,6 +1,6 @@
 .poljeNijeIspravno{
-    --fxbackground-color: lightpink;
+    -fx-background-color: lightpink;
 }
 .poljeIspravno{
-    --fxbackground-color: lightskyblue;
+    -fx-background-color: yellowgreen;
 }
