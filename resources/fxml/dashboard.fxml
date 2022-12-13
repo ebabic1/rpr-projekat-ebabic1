@@ -19,6 +19,6 @@
    <children>
       <Label alignment="CENTER" prefHeight="17.0" prefWidth="68.0" text="Dobrodošli" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
       <Label fx:id="labelIme" alignment="TOP_RIGHT" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#logoutClicked" prefHeight="25.0" prefWidth="153.0" text="Logout" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#logoutClicked" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: lightblue;" text="Logout" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
    </children>
 </GridPane>
