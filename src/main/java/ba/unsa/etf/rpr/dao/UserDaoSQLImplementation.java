@@ -45,7 +45,7 @@ public class UserDaoSQLImplementation implements UserDao {
 
     @Override
     public User add(User item) {
-        String query = "INSERT INTO Users (firstName,lastName,city,country,email,phone,password) VALUES (?,?,?,?,NULL,?,?)";
+        String query = "INSERT INTO Users (firstName,lastName,city,country,email,phone,password,username) VALUES (?,?,?,?,NULL,?,?,?)";
         return getUser(item, query);
     }
 
@@ -68,7 +68,7 @@ public class UserDaoSQLImplementation implements UserDao {
 
     @Override
     public User update(User item) {
-        String query = "UPDATE Users  SET firstName = ?, SET lastName = ?, SET city = ?, SET country = ?, SET email = ?, SET phone = ?, SET password = ?, SET roleId = ? WHERE userId = ";
+        String query = "UPDATE Users  SET firstName = ?, SET lastName = ?, SET city = ?, SET country = ?, SET email = ?, SET phone = ?, SET password = ?, SET username = ?, SET admin = ? WHERE userId = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1,item.getFirstName());
@@ -78,6 +78,9 @@ public class UserDaoSQLImplementation implements UserDao {
             stmt.setString(5,item.getEmail());
             stmt.setString(6,item.getPhone());
             stmt.setString(7,item.getPassword());
+            stmt.setString(8,item.getUsername());
+            stmt.setInt(9,item.getAdmin());
+            stmt.setInt(10,item.getUserId());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -116,6 +119,8 @@ public class UserDaoSQLImplementation implements UserDao {
         user.setPhone(resultSet.getString("phone"));
         user.setFirstName(resultSet.getString("firstName"));
         user.setLastName(resultSet.getString("lastName"));
+        user.setAdmin(resultSet.getInt("admin"));
+        user.setUsername(resultSet.getString("username"));
         return user;
     }
 
