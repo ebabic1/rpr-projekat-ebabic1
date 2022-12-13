@@ -7,9 +7,9 @@ import javafx.scene.input.MouseEvent;
 
 public class DashboardController {
     @FXML
-    private Label labelIme;
+    public Label labelIme;
     @FXML
-    private Button logoutButton;
+    public Button logoutButton;
 
 
     public void logoutClicked(MouseEvent mouseEvent) {
