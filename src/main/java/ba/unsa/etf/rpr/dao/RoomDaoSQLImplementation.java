@@ -120,6 +120,31 @@ public class RoomDaoSQLImplementation implements RoomDao {
                 Room room = new Room();
                 room.setRoomId(resultSet.getInt("roomId"));
                 room.setMaxPersons(resultSet.getInt("maxPersons"));
+                room.setDescription(resultSet.getString("description"));
+                room.setAvailable(resultSet.getInt("available"));
+                roomList.add(room);
+            }
+            resultSet.close();
+            return roomList;
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public List<Room> searchByAvailable(int available) {
+        List<Room> roomList = new ArrayList<>();
+        String query = "SELECT * FROM Rooms WHERE available = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1,available);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()){
+                Room room = new Room();
+                room.setRoomId(resultSet.getInt("roomId"));
+                room.setMaxPersons(resultSet.getInt("maxPersons"));
+                room.setDescription(resultSet.getString("description"));
+                room.setAvailable(resultSet.getInt("available"));
                 roomList.add(room);
             }
             resultSet.close();

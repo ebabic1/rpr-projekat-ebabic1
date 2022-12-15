@@ -14,4 +14,5 @@ public interface RoomDao extends Dao<Room> {
      * @return list of rooms
      */
     List<Room> searchByMaxPersons(int maxPersons);
+    List<Room> searchByAvailable(int available);
 }
