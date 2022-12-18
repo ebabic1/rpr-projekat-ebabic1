@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -19,14 +20,14 @@ public interface Dao<T> {
      * @param item - item to be added
      * @return saved item
      */
-    T add(T item);
+    T add(T item) throws SQLException;
 
     /**
      * Updates database entities
      * @param item - item to be updated
      * @return updated version of item
      */
-    T update(T item);
+    T update(T item) throws SQLException;
 
     /**
      * Deletes items by id
