@@ -8,16 +8,32 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class DashboardController {
     @FXML
-    public Label labelIme;
-    @FXML
-    public Button logoutButton;
+    private Button dashboardButton;
 
+    @FXML
+    private Button gManButton;
+
+    @FXML
+    private GridPane gManGridPane;
+
+    @FXML
+    public Label labelIme;
+
+    @FXML
+    private Button logoutButton;
+
+    @FXML
+    private Button rManButton;
+
+    @FXML
+    private GridPane rManGridPane;
 
     public void logoutClicked(MouseEvent mouseEvent) throws IOException {
         Node n = (Node) mouseEvent.getSource();

@@ -35,13 +35,13 @@
          </padding></Label>
       <VBox prefHeight="26.0" prefWidth="243.0" style="-fx-background-color: #6B728E;" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
-            <Button id="dashboardButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="300.0" style="-fx-background-color: #6B728E;" text="Dashboard" textFill="WHITE" />
-            <Button id="rManButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="300.0" style="-fx-background-color: #6B728E;" text="Room Management" textFill="WHITE" />
-            <Button id="gManButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="300.0" style="-fx-background-color: #6B728E;" text="Guest Management" textFill="WHITE" />
+            <Button id="dashboardButton" fx:id="dashboardButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="300.0" style="-fx-background-color: #6B728E;" text="Dashboard" textFill="WHITE" />
+            <Button id="rManButton" fx:id="rManButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="300.0" style="-fx-background-color: #6B728E;" text="Room Management" textFill="WHITE" />
+            <Button id="gManButton" fx:id="gManButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="300.0" style="-fx-background-color: #6B728E;" text="Guest Management" textFill="WHITE" />
          </children>
       </VBox>
       <Button id="logoutButton" fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#logoutClicked" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: lightblue;" text="Logout" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <GridPane id="rManGridPane" style="-fx-background-color: #474E68;" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowSpan="5">
+      <GridPane id="rManGridPane" fx:id="rManGridPane" style="-fx-background-color: #474E68;" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowSpan="5">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -76,7 +76,7 @@
             <ComboBox prefHeight="25.0" prefWidth="128.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <GridPane id="gManGridPane" style="-fx-background-color: #474E68;" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowSpan="2147483647">
+      <GridPane id="gManGridPane" fx:id="gManGridPane" style="-fx-background-color: #474E68;" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowSpan="2147483647">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
