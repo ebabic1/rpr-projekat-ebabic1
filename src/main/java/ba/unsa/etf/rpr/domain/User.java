@@ -6,8 +6,8 @@ import java.util.Objects;
  * Holds guest details
  * @author Eldar Babić
  */
-public class User {
-    private int userId;
+public class User implements IDable {
+    private int id;
     private String firstName;
     private String lastName;
     private String city;
@@ -37,7 +37,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", city='" + city + '\'' +
@@ -54,20 +54,20 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User user)) return false;
-        return getUserId() == user.getUserId() && getAdmin() == user.getAdmin() && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getCity(), user.getCity()) && Objects.equals(getCountry(), user.getCountry()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPhone(), user.getPhone()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getUsername(), user.getUsername());
+        return getId() == user.getId() && getAdmin() == user.getAdmin() && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getCity(), user.getCity()) && Objects.equals(getCountry(), user.getCountry()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPhone(), user.getPhone()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getUsername(), user.getUsername());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getFirstName(), getLastName(), getCity(), getCountry(), getEmail(), getPhone(), getPassword(), getAdmin(), getUsername());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getCity(), getCountry(), getEmail(), getPhone(), getPassword(), getAdmin(), getUsername());
     }
 
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int userId) {
+        this.id = userId;
     }
 
     public String getFirstName() {

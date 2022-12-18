@@ -4,50 +4,41 @@ import ba.unsa.etf.rpr.domain.User;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.sql.*;
-import java.util.Properties;
 
-public class UserDaoSQLImplementation implements UserDao {
+public class UserDaoSQLImplementation extends AbstractDao<User> implements UserDao {
     private Connection connection;
 
     public UserDaoSQLImplementation(){
-        try {
-            final Properties login = new Properties();
-            login.load(new FileInputStream("src/main/java/ba/unsa/etf/rpr/login.properties"));
-            connection = DriverManager.getConnection(login.getProperty("connection.string"), login.getProperty("username"), login.getProperty("password"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        super("Users");
     }
-    @Override
-    public User getById(int id) {
-        String query = "SELECT * FROM Users WHERE userId = ?";
-        try {
-            PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1,id);
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()){
-                User g = makeNewUser(resultSet);
-                resultSet.close();
-                return g;
-            }
-            return null;
 
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+
+    @Override
+    public User rowToObject(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        user = makeNewUser(resultSet);
+        return user;
     }
 
     @Override
-    public User add(User item) {
-        String query = "INSERT INTO Users (firstName,lastName,city,country,email,phone,password,username) VALUES (?,?,?,?,NULL,?,?,?)";
-        return getUser(item, query);
+    public Map<String, Object> objectToRow(User object) throws SQLException {
+        Map<String, Object> item = new TreeMap<>();
+        item.put("id",object.getId());
+        item.put("firstName",object.getFirstName());
+        item.put("lastName",object.getLastName());
+        item.put("city",object.getCity());
+        item.put("country",object.getCountry());
+        item.put("email",object.getEmail());
+        item.put("phone",object.getPhone());
+        item.put("password",object.getPassword());
+        item.put("admin",object.getAdmin());
+        item.put("username",object.getUsername());
+        return item;
     }
+
+
 
     private User getUser(User item, String query) {
         try {
@@ -66,53 +57,15 @@ public class UserDaoSQLImplementation implements UserDao {
         return item;
     }
 
-    @Override
-    public User update(User item) {
-        String query = "UPDATE Users  SET firstName = ?, SET lastName = ?, SET city = ?, SET country = ?, SET email = ?, SET phone = ?, SET password = ?, SET username = ?, SET admin = ? WHERE userId = ?";
-        try {
-            PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setString(1,item.getFirstName());
-            stmt.setString(2,item.getLastName());
-            stmt.setString(3,item.getCity());
-            stmt.setString(4,item.getCountry());
-            stmt.setString(5,item.getEmail());
-            stmt.setString(6,item.getPhone());
-            stmt.setString(7,item.getPassword());
-            stmt.setString(8,item.getUsername());
-            stmt.setInt(9,item.getAdmin());
-            stmt.setInt(10,item.getUserId());
-            stmt.executeUpdate();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return item;
-    }
 
-    @Override
-    public void delete(int id) {
-        String query = "DELETE FROM Users WHERE userId = ?";
-        try {
-            PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1,id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-    }
 
-    @Override
-    public List<User> getAll() {
-        List<User> userList = new ArrayList<>();
-        String query = "SELECT * FROM Users";
-        return getUsers(userList, query);
 
-    }
 
     private User makeNewUser(ResultSet resultSet) throws SQLException {
         User user = new User();
-        user.setUserId(resultSet.getInt("userId"));
+        user.setId(resultSet.getInt("userId"));
         user.setCity(resultSet.getString("city"));
         user.setCountry(resultSet.getString("country"));
         user.setEmail(resultSet.getString("email"));
