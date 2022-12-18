@@ -7,8 +7,8 @@ import java.util.Objects;
  * Holds every room reservation
  * @author  Eldar Babić
  */
-public class Reservation {
-    private int reservationId;
+public class Reservation implements IDable{
+    private int id;
     private Date arrivalDate;
     private Date leaveDate;
     private String additionalInfo;
@@ -18,7 +18,7 @@ public class Reservation {
     @Override
     public String toString() {
         return "Booking{" +
-                "reservationId=" + reservationId +
+                "reservationId=" + id +
                 ", arrivalDate=" + arrivalDate +
                 ", leaveDate=" + leaveDate +
                 ", additionalInfo='" + additionalInfo + '\'' +
@@ -32,20 +32,20 @@ public class Reservation {
         if (this == o) return true;
         if (!(o instanceof Reservation)) return false;
         Reservation booking = (Reservation) o;
-        return getReservationId() == booking.getReservationId()  && getGuestId() == booking.getGuestId() && getRoomId() == booking.getRoomId() && getArrivalDate().equals(booking.getArrivalDate()) && getLeaveDate().equals(booking.getLeaveDate()) && getAdditionalInfo().equals(booking.getAdditionalInfo());
+        return getId() == booking.getId()  && getGuestId() == booking.getGuestId() && getRoomId() == booking.getRoomId() && getArrivalDate().equals(booking.getArrivalDate()) && getLeaveDate().equals(booking.getLeaveDate()) && getAdditionalInfo().equals(booking.getAdditionalInfo());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getReservationId(), getArrivalDate(), getLeaveDate(), getAdditionalInfo(), getGuestId(), getRoomId());
+        return Objects.hash(getId(), getArrivalDate(), getLeaveDate(), getAdditionalInfo(), getGuestId(), getRoomId());
     }
 
-    public int getReservationId() {
-        return reservationId;
+    public int getId() {
+        return id;
     }
 
-    public void setReservationId(int reservationId) {
-        this.reservationId = reservationId;
+    public void setId(int reservationId) {
+        this.id = reservationId;
     }
 
     public Date getArrivalDate() {
