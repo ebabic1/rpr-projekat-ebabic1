@@ -6,8 +6,8 @@ import java.util.Objects;
  Holds all hotel rooms
  @author Eldar Babić
  */
-public class Room {
-    private int roomId;
+public class Room implements IDable{
+    private int Id;
     private int maxPersons;
     private String description;
     private int available;
@@ -16,7 +16,7 @@ public class Room {
     @Override
     public String toString() {
         return "Room{" +
-                "roomId=" + roomId +
+                "id=" + Id +
                 ", maxPersons=" + maxPersons +
                 ", description='" + description + '\'' +
                 ", available=" + available +
@@ -28,12 +28,12 @@ public class Room {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Room room)) return false;
-        return getRoomId() == room.getRoomId() && getMaxPersons() == room.getMaxPersons() && getAvailable() == room.getAvailable() && getPrice() == room.getPrice() && Objects.equals(getDescription(), room.getDescription());
+        return getId() == room.getId() && getMaxPersons() == room.getMaxPersons() && getAvailable() == room.getAvailable() && getPrice() == room.getPrice() && Objects.equals(getDescription(), room.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getRoomId(), getMaxPersons(), getDescription(), getAvailable(), getPrice());
+        return Objects.hash(getId(), getMaxPersons(), getDescription(), getAvailable(), getPrice());
     }
 
     public double getPrice() {
@@ -60,12 +60,12 @@ public class Room {
         this.available = available;
     }
 
-    public int getRoomId() {
-        return roomId;
+    public int getId() {
+        return Id;
     }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
+    public void setId(int roomId) {
+        this.Id = roomId;
     }
 
     public int getMaxPersons() {
