@@ -5,45 +5,29 @@ import ba.unsa.etf.rpr.domain.Reservation;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.sql.Date;
+import java.util.*;
 
-public class ReservationDaoSQLImplementation implements ReservationDao{
+public class ReservationDaoSQLImplementation extends AbstractDao<Reservation> implements ReservationDao{
     private Connection connection;
 
     public ReservationDaoSQLImplementation() {
-        try {
-            final Properties login = new Properties();
-            login.load(new FileInputStream("src/main/java/ba/unsa/etf/rpr/login.properties"));
-            connection = DriverManager.getConnection(login.getProperty("connection.string"), login.getProperty("username"), login.getProperty("password"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        super("Reservations");
     }
-
     @Override
-    public Reservation getById(int id) {String query = "SELECT * FROM Reservations WHERE reservationId = ?";
-        try {
-        PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setInt(1,id);
-        ResultSet resultSet = stmt.executeQuery();
-        if (resultSet.next()){
-            Reservation reservation = setReservation(resultSet);
-            resultSet.close();
-            return reservation;
-        }
-        return null;
 
-    }catch(SQLException e) {
-        e.printStackTrace();
+    public Map<String, Object> ObjectToRow(Reservation object){
+        Map<String, Object> row = new TreeMap<>();
+        row.put("reservationId",object.getReservationId());
+        row.put("arrivalDate",object.getArrivalDate());
+        row.put("leaveDate",object.getLeaveDate());
+        row.put("additionalInfo",object.getAdditionalInfo());
+        row.put("roomId",object.getRoomId());
+        row.put("guestId",object.getGuestId());
+        return row;
     }
-        return null;
-}
-
-    private Reservation setReservation(ResultSet resultSet) throws SQLException {
+    @Override
+    public Reservation RowToObject(ResultSet resultSet) throws SQLException {
         Reservation reservation = new Reservation();
         reservation.setReservationId(resultSet.getInt("reservationId"));
         reservation.setArrivalDate(resultSet.getDate("arrivalDate"));
@@ -51,21 +35,21 @@ public class ReservationDaoSQLImplementation implements ReservationDao{
         reservation.setAdditionalInfo(resultSet.getString("additionalInfo"));
         reservation.setRoomId(resultSet.getInt("roomId"));
         reservation.setGuestId(resultSet.getInt("guestId"));
-        reservation.setPaymentAmount(resultSet.getDouble("paymentAmount"));
         return reservation;
     }
 
+
+
     @Override
     public Reservation add(Reservation item) {
-        String query = "INSERT INTO Reservations (arrivalDate,leaveDate,paymentAmount,additionalInfo,guestId,roomId) VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO Reservations (arrivalDate,leaveDate,additionalInfo,guestId,roomId) VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setDate(1,  item.getArrivalDate());
             stmt.setDate(2, item.getLeaveDate());
-            stmt.setDouble(3,item.getPaymentAmount());
-            stmt.setString(4,item.getAdditionalInfo());
-            stmt.setInt(5,item.getGuestId());
-            stmt.setInt(6,item.getRoomId());
+            stmt.setString(3,item.getAdditionalInfo());
+            stmt.setInt(4,item.getGuestId());
+            stmt.setInt(5,item.getRoomId());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -76,16 +60,15 @@ public class ReservationDaoSQLImplementation implements ReservationDao{
 
     @Override
     public Reservation update(Reservation item) {
-        String query = "UPDATE Reservations SET arrivalDate = str_to_date(?,'%Y-%m-%d'),  leaveDate = str_to_date(?,'%Y-%m-%d'),  paymentAmount = ?,  additionalInfo = ?,  guestId = ?,  roomId = ? WHERE reservationId = ?";
+        String query = "UPDATE Reservations SET arrivalDate = str_to_date(?,'%Y-%m-%d'),  leaveDate = str_to_date(?,'%Y-%m-%d'),  additionalInfo = ?,  guestId = ?,  roomId = ? WHERE reservationId = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setDate(1, item.getArrivalDate());
             stmt.setDate(2, item.getLeaveDate());
-            stmt.setDouble(3,item.getPaymentAmount());
-            stmt.setString(4,item.getAdditionalInfo());
-            stmt.setInt(5,item.getGuestId());
-            stmt.setInt(6,item.getRoomId());
-            stmt.setInt(7,item.getReservationId());
+            stmt.setString(3,item.getAdditionalInfo());
+            stmt.setInt(4,item.getGuestId());
+            stmt.setInt(5,item.getRoomId());
+            stmt.setInt(6,item.getReservationId());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -114,7 +97,7 @@ public class ReservationDaoSQLImplementation implements ReservationDao{
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()){
-                reservationList.add(setReservation(resultSet));
+                reservationList.add(RowToObject(resultSet));
             }
             resultSet.close();
             return reservationList;
@@ -142,7 +125,6 @@ public class ReservationDaoSQLImplementation implements ReservationDao{
                 reservation.setAdditionalInfo(resultSet.getString("additionalInfo"));
                 reservation.setRoomId(resultSet.getInt("roomId"));
                 reservation.setGuestId(resultSet.getInt("guestId"));
-                reservation.setPaymentAmount(resultSet.getDouble("paymentAmount"));
                 reservationList.add(reservation);
             }
             resultSet.close();

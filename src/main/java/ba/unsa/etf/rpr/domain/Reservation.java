@@ -11,7 +11,6 @@ public class Reservation {
     private int reservationId;
     private Date arrivalDate;
     private Date leaveDate;
-    private double paymentAmount;
     private String additionalInfo;
     private int guestId;
     private int roomId;
@@ -22,7 +21,6 @@ public class Reservation {
                 "reservationId=" + reservationId +
                 ", arrivalDate=" + arrivalDate +
                 ", leaveDate=" + leaveDate +
-                ", paymentAmount=" + paymentAmount +
                 ", additionalInfo='" + additionalInfo + '\'' +
                 ", guestId=" + guestId +
                 ", roomId=" + roomId +
@@ -34,12 +32,12 @@ public class Reservation {
         if (this == o) return true;
         if (!(o instanceof Reservation)) return false;
         Reservation booking = (Reservation) o;
-        return getReservationId() == booking.getReservationId() && Double.compare(booking.getPaymentAmount(), getPaymentAmount()) == 0 && getGuestId() == booking.getGuestId() && getRoomId() == booking.getRoomId() && getArrivalDate().equals(booking.getArrivalDate()) && getLeaveDate().equals(booking.getLeaveDate()) && getAdditionalInfo().equals(booking.getAdditionalInfo());
+        return getReservationId() == booking.getReservationId()  && getGuestId() == booking.getGuestId() && getRoomId() == booking.getRoomId() && getArrivalDate().equals(booking.getArrivalDate()) && getLeaveDate().equals(booking.getLeaveDate()) && getAdditionalInfo().equals(booking.getAdditionalInfo());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getReservationId(), getArrivalDate(), getLeaveDate(), getPaymentAmount(), getAdditionalInfo(), getGuestId(), getRoomId());
+        return Objects.hash(getReservationId(), getArrivalDate(), getLeaveDate(), getAdditionalInfo(), getGuestId(), getRoomId());
     }
 
     public int getReservationId() {
@@ -65,15 +63,6 @@ public class Reservation {
     public void setLeaveDate(Date leaveDate) {
         this.leaveDate = leaveDate;
     }
-
-    public double getPaymentAmount() {
-        return paymentAmount;
-    }
-
-    public void setPaymentAmount(double paymentAmount) {
-        this.paymentAmount = paymentAmount;
-    }
-
     public String getAdditionalInfo() {
         return additionalInfo;
     }
