@@ -11,6 +11,7 @@ public class Room {
     private int maxPersons;
     private String description;
     private int available;
+    private double price;
 
     @Override
     public String toString() {
@@ -19,6 +20,7 @@ public class Room {
                 ", maxPersons=" + maxPersons +
                 ", description='" + description + '\'' +
                 ", available=" + available +
+                ", price=" + price +
                 '}';
     }
 
@@ -26,12 +28,20 @@ public class Room {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Room room)) return false;
-        return getRoomId() == room.getRoomId() && getMaxPersons() == room.getMaxPersons() && getAvailable() == room.getAvailable() && Objects.equals(getDescription(), room.getDescription());
+        return getRoomId() == room.getRoomId() && getMaxPersons() == room.getMaxPersons() && getAvailable() == room.getAvailable() && getPrice() == room.getPrice() && Objects.equals(getDescription(), room.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getRoomId(), getMaxPersons(), getDescription(), getAvailable());
+        return Objects.hash(getRoomId(), getMaxPersons(), getDescription(), getAvailable(), getPrice());
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public String getDescription() {

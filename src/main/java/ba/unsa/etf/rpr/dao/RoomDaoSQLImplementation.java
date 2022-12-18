@@ -33,6 +33,7 @@ public class RoomDaoSQLImplementation implements RoomDao {
                 Room room = new Room();
                 room.setRoomId(resultSet.getInt("roomId"));
                 room.setMaxPersons(resultSet.getInt("maxPersons"));
+                room.setPrice(resultSet.getDouble("price"));
                 resultSet.close();
                 return room;
             }
