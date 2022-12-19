@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -35,6 +37,9 @@ public class DashboardController {
     @FXML
     private GridPane rManGridPane;
 
+    @FXML
+    private BorderPane mainBorderPane;
+
     public void logoutClicked(MouseEvent mouseEvent) throws IOException {
         Node n = (Node) mouseEvent.getSource();
         Stage s1 = (Stage) n.getScene().getWindow();
@@ -45,5 +50,15 @@ public class DashboardController {
         stage.setTitle("Hello!");
         stage.setScene(new Scene(root,USE_COMPUTED_SIZE,USE_COMPUTED_SIZE));
         stage.show();
+    }
+
+    public void gManPressed(ActionEvent mouseEvent) throws IOException {
+        GridPane gridPane = FXMLLoader.load(getClass().getResource("/fxml/guestmgmt.fxml"));
+        mainBorderPane.setCenter(gridPane);
+    }
+
+    public void rManPressed(ActionEvent mouseEvent) throws IOException {
+        GridPane gridPane = FXMLLoader.load(getClass().getResource("/fxml/roommgmt.fxml"));
+        mainBorderPane.setCenter(gridPane);
     }
 }
