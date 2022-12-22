@@ -16,6 +16,7 @@ import java.io.IOException;
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class DashboardController {
+    public GridPane mainPane;
     @FXML
     private Button dashboardButton;
 
@@ -54,11 +55,13 @@ public class DashboardController {
 
     public void gManPressed(ActionEvent mouseEvent) throws IOException {
         GridPane gridPane = FXMLLoader.load(getClass().getResource("/fxml/guestmgmt.fxml"));
+        gridPane.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
         mainBorderPane.setCenter(gridPane);
     }
 
     public void rManPressed(ActionEvent mouseEvent) throws IOException {
         GridPane gridPane = FXMLLoader.load(getClass().getResource("/fxml/roommgmt.fxml"));
+        gridPane.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
         mainBorderPane.setCenter(gridPane);
     }
 }
