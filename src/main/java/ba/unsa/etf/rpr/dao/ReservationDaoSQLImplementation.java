@@ -6,12 +6,10 @@ import java.sql.*;
 import java.util.*;
 
 public class ReservationDaoSQLImplementation extends AbstractDao<Reservation> implements ReservationDao{
-    private Connection connection;
 
     public ReservationDaoSQLImplementation() {super("Reservations");
     }
     @Override
-
     public Map<String, Object> objectToRow(Reservation object){
         Map<String, Object> row = new TreeMap<>();
         row.put("reservationId",object.getId());
