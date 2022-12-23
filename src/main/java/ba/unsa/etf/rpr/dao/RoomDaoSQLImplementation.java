@@ -6,7 +6,6 @@ import java.sql.*;
 import java.util.*;
 
 public class RoomDaoSQLImplementation extends AbstractDao<Room> implements RoomDao {
-    private Connection connection;
 
     public RoomDaoSQLImplementation() {
         super("Rooms");
