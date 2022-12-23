@@ -8,7 +8,11 @@ import java.sql.*;
 import java.util.*;
 
 public abstract class AbstractDao<T extends IDable> implements Dao<T> {
-    private Connection connection;
+    public Connection getConnection() {
+        return connection;
+    }
+
+    protected Connection connection;
     private String tableName;
     public AbstractDao(String tableName) {
         this.tableName = tableName;
