@@ -8,12 +8,29 @@ import java.util.*;
 import java.sql.*;
 
 public class UserDaoSQLImplementation extends AbstractDao<User> implements UserDao {
-    private Connection connection;
 
     public UserDaoSQLImplementation(){
         super("Users");
     }
+    public User getByUsername(String username) {
+        String query = "SELECT * FROM Users WHERE username = ?;";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1,username);
+            System.out.println(query);
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()){
+                User object = rowToObject(resultSet);
+                resultSet.close();
+                return object;
+            }
+            return null;
 
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public User rowToObject(ResultSet resultSet) throws SQLException {
@@ -65,7 +82,7 @@ public class UserDaoSQLImplementation extends AbstractDao<User> implements UserD
 
     private User makeNewUser(ResultSet resultSet) throws SQLException {
         User user = new User();
-        user.setId(resultSet.getInt("userId"));
+        user.setId(resultSet.getInt("id"));
         user.setCity(resultSet.getString("city"));
         user.setCountry(resultSet.getString("country"));
         user.setEmail(resultSet.getString("email"));
@@ -74,6 +91,7 @@ public class UserDaoSQLImplementation extends AbstractDao<User> implements UserD
         user.setLastName(resultSet.getString("lastName"));
         user.setAdmin(resultSet.getInt("admin"));
         user.setUsername(resultSet.getString("username"));
+        user.setPassword(resultSet.getString("password"));
         return user;
     }
 
