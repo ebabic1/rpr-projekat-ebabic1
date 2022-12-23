@@ -20,9 +20,10 @@
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="33.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
     <stylesheets>
@@ -34,18 +35,23 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </Label>
-      <Label text="Password" textFill="WHITE" GridPane.rowIndex="1">
+      <Label text="Password" textFill="WHITE" GridPane.rowIndex="2">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </Label>
-      <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#loginClicked" prefHeight="25.0" prefWidth="327.0" style="-fx-background-color: lightblue;" text="Login" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+      <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" onAction="#loginClicked" prefHeight="25.0" prefWidth="327.0" style="-fx-background-color: lightblue;" text="Login" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
       <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="167.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
-      <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Register" textFill="#3013e8" underline="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-      <Label fx:id="wrongPasswordLabel" text="Wrong password. " textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Register" textFill="#3013e8" underline="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+      <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+      <Label fx:id="wrongPasswordLabel" text="Wrong password. " textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </Label>
+      <Label fx:id="userNotfoundLabel" text="User not found" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
    <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
 </GridPane>

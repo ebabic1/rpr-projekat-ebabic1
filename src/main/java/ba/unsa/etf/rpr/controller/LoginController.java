@@ -4,16 +4,13 @@ import ba.unsa.etf.rpr.dao.UserDaoSQLImplementation;
 import ba.unsa.etf.rpr.domain.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,6 +19,7 @@ import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class LoginController {
     public Label wrongPasswordLabel;
+    public Label userNotfoundLabel;
     public PasswordField passwordField;
     public TextField usernameField;
     public Button loginButton;
@@ -56,23 +54,42 @@ public class LoginController {
             }
         });
     }
-    public void loginClicked(MouseEvent mouseEvent) throws IOException {
+    public void loginClicked(ActionEvent actionEvent) throws IOException {
         if (usernameField.getText().trim().isEmpty() || passwordField.getText().trim().isEmpty()){
             return;
         }
         UserDaoSQLImplementation uDao = new UserDaoSQLImplementation();
-        User u = uDao.getByUsername(passwordField.getText());
+        User u = uDao.getByUsername(usernameField.getText());
         if (u == null){
             System.out.println("Korisnik nije nađen");
+            userNotfoundLabel.setVisible(true);
+            usernameField.getStyleClass().removeAll("poljeIspravno");
+            usernameField.getStyleClass().add("poljeNijeIspravno");
             return;
         }
-        if( !u.getPassword().equals(passwordField.getText()) || u.getAdmin() != 1){
+        else {
+            userNotfoundLabel.setVisible(false);
+        }
+        if( !u.getPassword().equals(passwordField.getText())){
             wrongPasswordLabel.setVisible(true);
             passwordField.getStyleClass().removeAll("poljeIspravno");
-            passwordField.getStyleClass().add("poljeIspravno");
+            passwordField.getStyleClass().add("poljeNijeIspravno");
             return;
         }
-        Node n = (Node) mouseEvent.getSource();
+        else {
+            wrongPasswordLabel.setVisible(false);
+        }
+        if(u.getAdmin() == 0){
+            Alert warning = new Alert(Alert.AlertType.ERROR);
+            warning.setTitle("Missing privileges");
+            passwordField.getStyleClass().removeAll("poljeIspravno");
+            passwordField.getStyleClass().add("poljeNijeIspravno");
+            usernameField.getStyleClass().removeAll("poljeIspravno");
+            usernameField.getStyleClass().add("poljeNijeIspravno");
+            warning.showAndWait();
+            return;
+        }
+        Node n = (Node) actionEvent.getSource();
         Stage s1 = (Stage) n.getScene().getWindow();
         s1.close();
         Stage stage = new Stage();
