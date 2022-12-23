@@ -13,11 +13,10 @@ public class UserDaoSQLImplementation extends AbstractDao<User> implements UserD
         super("Users");
     }
     public User getByUsername(String username) {
-        String query = "SELECT * FROM Users WHERE username = ?;";
+        String query = "SELECT * FROM Users WHERE username = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setString(1,username);
-            System.out.println(query);
+            stmt.setString(1, username);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()){
                 User object = rowToObject(resultSet);
