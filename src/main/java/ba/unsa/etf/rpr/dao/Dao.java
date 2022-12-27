@@ -13,7 +13,7 @@ public interface Dao<T> {
      * @param id - id of entity
      * @return entity with given id, else throws an exception
      */
-    T getById(int id);
+    T getById(int id) throws SQLException;
 
     /**
      * Adds entities to database
@@ -33,11 +33,11 @@ public interface Dao<T> {
      * Deletes items by id
      * @param id - id of item to be deleted
      */
-    void delete(int id);
+    void delete(int id) throws SQLException;
 
     /**
      * Lists all entities from database
      * @return List of database entities
      */
-    List<T> getAll();
+    List<T> getAll() throws SQLException;
 }
