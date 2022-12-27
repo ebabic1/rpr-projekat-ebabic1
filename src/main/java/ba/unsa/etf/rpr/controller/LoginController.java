@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.controller;
 
+import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.dao.UserDaoSQLImplementation;
 import ba.unsa.etf.rpr.domain.User;
 import javafx.beans.value.ChangeListener;
@@ -12,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
@@ -55,11 +55,11 @@ public class LoginController {
         });
     }
     public void loginClicked(ActionEvent actionEvent) throws IOException {
-        if (usernameField.getText().trim().isEmpty() || passwordField.getText().trim().isEmpty()){
+        /*if (usernameField.getText().trim().isEmpty() || passwordField.getText().trim().isEmpty()){
             return;
         }
         UserDaoSQLImplementation uDao = new UserDaoSQLImplementation();
-        User u = uDao.getByUsername(usernameField.getText());
+        User u = DaoFactory.userDao().getByUsername(usernameField.getText());
         if (u == null){
             System.out.println("Korisnik nije nađen");
             userNotfoundLabel.setVisible(true);
@@ -88,7 +88,7 @@ public class LoginController {
             usernameField.getStyleClass().add("poljeNijeIspravno");
             warning.showAndWait();
             return;
-        }
+        }*/
         Node n = (Node) actionEvent.getSource();
         Stage s1 = (Stage) n.getScene().getWindow();
         s1.close();
