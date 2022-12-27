@@ -11,12 +11,14 @@ import javafx.scene.control.TextField;
  * @autor Eldar Babić
  */
 public class UserModel {
-    public SimpleStringProperty firstNameField;
-    public SimpleStringProperty  lastNameField;
-    public SimpleStringProperty  cityComboBox;
-    public SimpleStringProperty  countryComboBox;
-    public SimpleStringProperty  emailField;
-    public SimpleStringProperty  usernameField;
+    public SimpleStringProperty firstNameField = new SimpleStringProperty("");
+    public SimpleStringProperty  lastNameField = new SimpleStringProperty("");
+    public SimpleStringProperty  cityComboBox = new SimpleStringProperty("");
+    public SimpleStringProperty  countryComboBox = new SimpleStringProperty("");
+    public SimpleStringProperty  emailField = new SimpleStringProperty("");
+    public SimpleStringProperty  usernameField = new SimpleStringProperty("");
+    public SimpleStringProperty  passwordField = new SimpleStringProperty("");
+    public SimpleStringProperty  phoneField = new SimpleStringProperty("");
     public void fromUser(User u) {
         this.firstNameField.set(u.getFirstName());
         this.lastNameField.set(u.getLastName());
@@ -24,8 +26,10 @@ public class UserModel {
         this.countryComboBox.set(u.getCountry());
         this.emailField.set(u.getEmail());
         this.usernameField.set(u.getUsername());
+        this.passwordField.set(u.getPassword());
+        this.phoneField.set(u.getPhone());
     }
-    public void toUser(){
+    public User toUser(){
         User u = new User();
         u.setFirstName(this.firstNameField.getValue());
         u.setLastName(this.lastNameField.getValue());
@@ -33,6 +37,9 @@ public class UserModel {
         u.setCountry(this.countryComboBox.getValue());
         u.setEmail(this.emailField.getValue());
         u.setUsername(this.usernameField.getValue());
+        u.setPassword(this.passwordField.getValue());
+        u.setPhone(this.phoneField.getValue());
+        return u;
     }
     public String getFirstNameField() {
         return firstNameField.get();
@@ -129,7 +136,4 @@ public class UserModel {
     public void setPhoneField(String phoneField) {
         this.phoneField.set(phoneField);
     }
-
-    public SimpleStringProperty  passwordField;
-    public SimpleStringProperty  phoneField;
 }
