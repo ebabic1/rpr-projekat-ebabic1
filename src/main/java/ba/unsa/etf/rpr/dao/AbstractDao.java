@@ -37,7 +37,7 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
             questions.append("?");
             if(row.size() != counter) {
                 columns.append(",");
-                columns.append(",");
+                questions.append(",");
             }
         }
         return new AbstractMap.SimpleEntry<String,String>(columns.toString(),questions.toString());
@@ -66,12 +66,17 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
     @Override
     public T add(T item) throws SQLException {
         Map<String,Object> row = objectToRow(item);
+        for(Map.Entry<String,Object> entry : row.entrySet()){
+            System.out.println(entry);
+        }
         Map.Entry<String,String> columns = prepareInsertParts(row);
         String query = "INSERT INTO " + tableName + " (" +columns.getKey() + ") VALUES ("+columns.getValue() +")";
+        System.out.println(query);
         try {
             PreparedStatement stmt = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
             int counter = 1;
             for(Map.Entry<String,Object> entry : row.entrySet()){
+                if(entry.getKey().equals("id")) continue;
                 stmt.setObject(counter,entry.getValue());
                 counter++;
             }
@@ -103,15 +108,12 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException{
         String query = "DELETE FROM " + tableName + "WHERE id = ?";
-        try{
-            PreparedStatement stmt = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-            stmt.setObject(1,id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        PreparedStatement stmt = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+        stmt.setObject(1,id);
+        stmt.executeUpdate();
+
     }
     @Override
     public List<T> getAll() {
