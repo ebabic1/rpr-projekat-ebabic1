@@ -41,15 +41,16 @@ public class UserDaoSQLImplementation extends AbstractDao<User> implements UserD
     @Override
     public Map<String, Object> objectToRow(User object) throws SQLException {
         Map<String, Object> item = new TreeMap<>();
+
         item.put("id",object.getId());
-        item.put("firstName",object.getFirstName());
-        item.put("lastName",object.getLastName());
+        item.put("admin",object.getAdmin());
         item.put("city",object.getCity());
         item.put("country",object.getCountry());
         item.put("email",object.getEmail());
-        item.put("phone",object.getPhone());
+        item.put("firstName",object.getFirstName());
+        item.put("lastName",object.getLastName());
         item.put("password",object.getPassword());
-        item.put("admin",object.getAdmin());
+        item.put("phone",object.getPhone());
         item.put("username",object.getUsername());
         return item;
     }
