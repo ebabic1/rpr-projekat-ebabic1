@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="414.0" prefWidth="367.0" style="-fx-background-color: #404258;" vgap="5.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19">
+<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="414.0" prefWidth="367.0" style="-fx-background-color: #404258;" vgap="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controller.AddUpdateUserController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="0.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="575.0" minWidth="10.0" prefWidth="200.0" />
@@ -33,21 +33,21 @@
    </padding>
    <children>
       <Label text="First name: " textFill="WHITE" />
-      <TextField GridPane.columnIndex="1" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="firstNameField" GridPane.columnIndex="1" />
+      <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Label alignment="CENTER_RIGHT" text="Last name: " textFill="WHITE" GridPane.rowIndex="1" />
       <Separator prefWidth="200.0" style="-fx-background-color: #6B728E;" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
-      <ComboBox editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <ComboBox fx:id="cityComboBox" editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <Label text="City:" textFill="WHITE" GridPane.rowIndex="3" />
       <Label text="Country:" textFill="#f2f2f2" GridPane.rowIndex="4" />
-      <ComboBox editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <ComboBox fx:id="countryComboBox" editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <Label text="Email:" textFill="WHITE" GridPane.rowIndex="6" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <Label text="Username:" textFill="WHITE" GridPane.rowIndex="7" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
       <Label text="Password:" textFill="WHITE" GridPane.rowIndex="8" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="8" />
-      <TextField prefHeight="25.0" prefWidth="217.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <TextField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <TextField fx:id="phoneField" prefHeight="25.0" prefWidth="217.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <Label text="Phone" textFill="WHITE" GridPane.rowIndex="5" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
         <buttons>
