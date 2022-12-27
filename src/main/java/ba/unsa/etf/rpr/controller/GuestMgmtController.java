@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
@@ -31,7 +32,7 @@ public class GuestMgmtController {
     public TableView guestsTabela;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         idColumn.setCellValueFactory(new PropertyValueFactory<User,String>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<User,String>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<User,String>("lastName"));
@@ -41,23 +42,20 @@ public class GuestMgmtController {
         phoneColumn.setCellValueFactory(new PropertyValueFactory<User,String>("phone"));
         refreshGuests();
     }
-    public void createUpdateGuest(int id){
+    public void addOpenWindow(ActionEvent actionEvent) throws IOException {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/adduser.fxml"));
             Parent root = loader.load();
-            stage.setTitle("Add a guest");
+            stage.setTitle("Guest editor");
             stage.setScene(new Scene(root,USE_COMPUTED_SIZE,USE_COMPUTED_SIZE));
             stage.setResizable(false);
             stage.show();
         }catch (Exception e) {
-            new Alert(Alert.AlertType.NONE,e.getMessage(),ButtonType.OK).show();
+            e.printStackTrace();
         }
     }
-    public void addOpenWindow(ActionEvent actionEvent) throws IOException {
-
-    }
-    private void refreshGuests(){
+    private void refreshGuests() throws SQLException {
         guestsTabela.setItems(FXCollections.observableList(DaoFactory.userDao().getAll()));
     }
 }
