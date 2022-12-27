@@ -1,5 +1,10 @@
 package ba.unsa.etf.rpr;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.*;
+import java.util.Properties;
+
+import ba.unsa.etf.rpr.dao.RoomDaoSQLImplementation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,10 +27,10 @@ public class App extends Application
         stage.setResizable(false);
         stage.show();
     }
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) throws SQLException {
         launch();
-        /*Connection connection;
+        /*
+        Connection connection = null;
         try {
             RoomDaoSQLImplementation rDao = new RoomDaoSQLImplementation();
             final Properties login = new Properties();
@@ -62,12 +67,16 @@ public class App extends Application
             stmt12.executeUpdate("ALTER TABLE Reservations AUTO_INCREMENT = 1;");
             stmt12.executeUpdate("ALTER TABLE Users AUTO_INCREMENT = 1;");
             stmt12.executeUpdate("ALTER TABLE Rooms AUTO_INCREMENT = 1;");
-
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+        finally {
+            connection.close();
         }*/
+
     }
 
 }
