@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="414.0" prefWidth="367.0" style="-fx-background-color: #404258;" vgap="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controller.AddUpdateUserController">
+<GridPane fx:id="addupdateGridPane" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="414.0" prefWidth="367.0" style="-fx-background-color: #404258;" vgap="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controller.AddUpdateUserController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="0.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="575.0" minWidth="10.0" prefWidth="200.0" />
@@ -51,7 +51,7 @@
       <Label text="Phone" textFill="WHITE" GridPane.rowIndex="5" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" text="Ok" />
+          <Button fx:id="okButton" defaultButton="true" mnemonicParsing="false" onAction="#okPressed" text="Ok" />
             <Button cancelButton="true" mnemonicParsing="false" text="Cancel" />
         </buttons>
       </ButtonBar>
