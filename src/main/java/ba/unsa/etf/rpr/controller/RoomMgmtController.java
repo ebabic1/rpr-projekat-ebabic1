@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,7 +18,10 @@ public class RoomMgmtController {
     public TableColumn maxPersonsColumn;
     public TableColumn descriptionColumn;
     public TableColumn availableColumn;
+    @FXML
+    public void initialize(){
 
+    }
     public void editButtonPressed(ActionEvent actionEvent) {
     }
 
