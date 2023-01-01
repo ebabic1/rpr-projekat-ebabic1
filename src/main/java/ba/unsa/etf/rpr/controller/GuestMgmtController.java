@@ -125,4 +125,8 @@ public class GuestMgmtController {
     public void addButtonPressed(ActionEvent actionEvent) {
         addupdateScene(null);
     }
+
+    public void checkInButtonPressed(ActionEvent actionEvent) {
+
+    }
 }
