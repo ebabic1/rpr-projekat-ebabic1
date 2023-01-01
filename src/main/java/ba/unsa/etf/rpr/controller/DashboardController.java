@@ -64,4 +64,7 @@ public class DashboardController {
         gridPane.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
         mainBorderPane.setCenter(gridPane);
     }
+
+    public void resManPressed(ActionEvent actionEvent) {
+    }
 }
