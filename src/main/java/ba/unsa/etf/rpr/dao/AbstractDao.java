@@ -102,14 +102,14 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
             stmt.setObject(counter, entry.getValue());
             counter++;
         }
-        stmt.setObject(counter+1,item.getId());
+        stmt.setObject(counter,item.getId());
         stmt.executeUpdate();
         return item;
     }
 
     @Override
     public void delete(int id) throws SQLException{
-        String query = "DELETE FROM " + tableName + "WHERE id = ?";
+        String query = "DELETE FROM " + tableName + " WHERE id = ?";
         PreparedStatement stmt = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
         stmt.setObject(1,id);
         stmt.executeUpdate();
