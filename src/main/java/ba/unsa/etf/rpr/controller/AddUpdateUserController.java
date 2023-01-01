@@ -7,11 +7,13 @@ import ba.unsa.etf.rpr.exceptions.UserException;
 import ba.unsa.etf.rpr.model.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 /**
  * Add / update form controller
@@ -30,6 +32,17 @@ public class AddUpdateUserController {
     public GridPane addupdateGridPane;
     private UserModel userModel = new UserModel();
     private Integer uId;
+    private void exit(ActionEvent actionEvent){
+        Node n = (Node) actionEvent.getSource();
+        Stage s1 = (Stage) n.getScene().getWindow();
+        s1.close();
+    }
+    public Integer getuId() {
+        return uId;
+    }
+    public void setuId(Integer uId) {
+        this.uId = uId;
+    }
     public AddUpdateUserController() {
         uId = null;
     }
@@ -49,13 +62,12 @@ public class AddUpdateUserController {
         phoneField.textProperty().bindBidirectional(userModel.phoneFieldProperty());
         if (uId != null) {
             try {
-                userManager.getById(uId);
+                userModel.fromUser(userManager.getById(uId));
             } catch (UserException e) {
                 new Alert(Alert.AlertType.ERROR,e.getMessage(), ButtonType.OK).show();
             }
         }
     }
-
     public void okPressed(ActionEvent actionEvent) {
         User u = userModel.toUser();
 
@@ -72,6 +84,10 @@ public class AddUpdateUserController {
                 new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
             }
 
+    }
+
+    public void cancelPressed(ActionEvent actionEvent) {
+        exit(actionEvent);
     }
 }
 
