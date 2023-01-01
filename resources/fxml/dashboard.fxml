@@ -18,7 +18,7 @@
         <URL value="@../css/dashboard.css" />
     </stylesheets>
    <center>
-      <GridPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: #404258;" stylesheets="@../css/dashboard.css">
+      <GridPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="1000.0" style="-fx-background-color: #404258;" stylesheets="@../css/dashboard.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="233.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="439.0" minWidth="10.0" prefWidth="154.0" />
@@ -33,9 +33,6 @@
           <RowConstraints maxHeight="142.0" minHeight="10.0" prefHeight="79.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="135.0" minHeight="10.0" prefHeight="128.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <Button id="logoutButton" fx:id="logoutButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onMouseClicked="#logoutClicked" style="-fx-background-color: lightblue;" text="Logout" GridPane.rowIndex="4" />
-         </children>
       </GridPane>
    </center>
    <top>
@@ -65,6 +62,8 @@
             <Button id="dashboardButton" fx:id="dashboardButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="300.0" styleClass="sidebarButton" text="Dashboard" textFill="WHITE" />
             <Button id="rManButton" fx:id="rManButton" mnemonicParsing="false" onAction="#rManPressed" prefHeight="70.0" prefWidth="300.0" styleClass="sidebarButton" text="Room Management" textFill="WHITE" />
             <Button id="gManButton" fx:id="gManButton" mnemonicParsing="false" onAction="#gManPressed" prefHeight="70.0" prefWidth="300.0" styleClass="sidebarButton" text="Guest Management" textFill="WHITE" />
+            <Button fx:id="resManButton" mnemonicParsing="false" onAction="#resManPressed" prefHeight="70.0" prefWidth="300.0" styleClass="sidebarButton" text="Reservation Management" />
+            <Button id="logoutButton" fx:id="logoutButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onMouseClicked="#logoutClicked" style="-fx-background-color: lightblue;" text="Logout" />
          </children>
       </VBox>
    </left>

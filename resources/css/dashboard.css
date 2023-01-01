@@ -1,9 +1,10 @@
 .sidebarButton{
-    -fx-background-color :  #6B728E
+    -fx-background-color :  #6B728E;
+    -fx-text-fill : white;
 }
 .sidebarButton:hover {
     -fx-background-color: #868da6;
 }
 .sidebarButton:pressed{
-    -fx-background-color: #474E68
+    -fx-background-color: #474E68;
 }
