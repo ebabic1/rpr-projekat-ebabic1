@@ -45,6 +45,7 @@
             <TableColumn fx:id="phoneColumn" prefWidth="97.0" text="phone" />
         </columns>
       </TableView>
+      <Button fx:id="checkInButton" mnemonicParsing="false" onAction="#checkInButtonPressed" text="Check-in" GridPane.columnIndex="1" GridPane.rowIndex="5" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
