@@ -26,15 +26,15 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="editButton" mnemonicParsing="false" text="Edit" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <Button fx:id="addButton" mnemonicParsing="false" onAction="#addOpenWindow" text="Add" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+      <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonPressed" text="Edit" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButtonPressed" text="Add" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonPressed" text="Delete" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
       <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="197.0" promptText="Search..." GridPane.columnSpan="2">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </TextField>
-      <TableView fx:id="guestsTabela" prefHeight="461.0" prefWidth="616.0" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowSpan="2147483647">
+      <TableView fx:id="guestsTabela" maxHeight="460.0" maxWidth="635.0" prefHeight="461.0" prefWidth="616.0" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowSpan="2147483647">
         <columns>
             <TableColumn fx:id="idColumn" prefWidth="111.0" text="id" />
           <TableColumn fx:id="firstNameColumn" prefWidth="75.0" text="first_name" />
