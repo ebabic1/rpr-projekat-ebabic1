@@ -39,9 +39,11 @@ public class ReservationMgmtController {
         additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
         roomIdColumn.setCellValueFactory(new PropertyValueFactory<>("roomId"));
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        refreshReservations();
 
     }
     public void editButtonPressed(ActionEvent actionEvent) {
+
     }
 
     public void addButtonPressed(ActionEvent actionEvent) {
