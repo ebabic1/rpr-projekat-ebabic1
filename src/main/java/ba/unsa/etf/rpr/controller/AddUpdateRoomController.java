@@ -1,0 +1,71 @@
+package ba.unsa.etf.rpr.controller;
+
+import ba.unsa.etf.rpr.business.RoomManager;
+import ba.unsa.etf.rpr.domain.Room;
+import ba.unsa.etf.rpr.exceptions.RoomException;
+import ba.unsa.etf.rpr.model.RoomModel;
+import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.NumberStringConverter;
+
+public class AddUpdateRoomController {
+
+    public Button okButton;
+    public Button cancelButton;
+    public TextField priceField;
+    public TextField maxPersonsField;
+    public TextArea descriptionField;
+    public GridPane addupdateGridPane;
+    private Integer rId;
+    private RoomModel roomModel = new RoomModel();
+    private RoomManager roomManager = new RoomManager();
+    @FXML
+    public void initialize() {
+        Bindings.bindBidirectional(priceField.textProperty(),roomModel.priceFieldProperty(),new NumberStringConverter());
+        maxPersonsField.textProperty().bindBidirectional(roomModel.maxPersonsFieldProperty(),new NumberStringConverter());
+        descriptionField.textProperty().bindBidirectional(roomModel.descriptionFieldProperty());
+        if (rId != null) {
+            try {
+                roomModel.fromRoom(roomManager.getById(rId));
+            } catch (RoomException e) {
+                new Alert(Alert.AlertType.ERROR,e.getMessage(), ButtonType.OK).show();
+            }
+        }
+    }
+    private void exit(ActionEvent actionEvent){
+        Node n = (Node) actionEvent.getSource();
+        Stage s1 = (Stage) n.getScene().getWindow();
+        s1.close();
+    }
+    public AddUpdateRoomController(Integer rId){this.rId = rId;}
+    public Integer getrId() {
+        return rId;
+    }
+
+    public void okPressed(ActionEvent actionEvent) {
+        Room r = roomModel.toRoom();
+        try {
+            if(rId != null){
+                r.setId(rId);
+                roomManager.update(r);
+            }
+            else {
+                r.setAvailable(1);
+                roomManager.add(r);
+            }
+            addupdateGridPane.getScene().getWindow().hide();
+        } catch (RoomException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void cancelPressed(ActionEvent actionEvent) {
+        exit(actionEvent);
+    }
+}
