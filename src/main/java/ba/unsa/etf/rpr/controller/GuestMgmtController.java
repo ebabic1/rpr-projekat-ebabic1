@@ -68,7 +68,7 @@ public class GuestMgmtController {
         refreshGuests();
     }
 
-    public void addupdateScene(Integer uId){
+    private void addupdateScene(Integer uId){
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/adduser.fxml"));
