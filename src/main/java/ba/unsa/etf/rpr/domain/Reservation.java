@@ -12,32 +12,47 @@ public class Reservation implements IDable{
     private Date arrivalDate;
     private Date leaveDate;
     private String additionalInfo;
-    private int guestId;
-    private int roomId;
-
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "reservationId=" + id +
-                ", arrivalDate=" + arrivalDate +
-                ", leaveDate=" + leaveDate +
-                ", additionalInfo='" + additionalInfo + '\'' +
-                ", guestId=" + guestId +
-                ", roomId=" + roomId +
-                '}';
-    }
+    private User user;
+    private Room room;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Reservation)) return false;
-        Reservation booking = (Reservation) o;
-        return getId() == booking.getId()  && getGuestId() == booking.getGuestId() && getRoomId() == booking.getRoomId() && getArrivalDate().equals(booking.getArrivalDate()) && getLeaveDate().equals(booking.getLeaveDate()) && getAdditionalInfo().equals(booking.getAdditionalInfo());
+        if (!(o instanceof Reservation that)) return false;
+        return getId() == that.getId() && Objects.equals(getArrivalDate(), that.getArrivalDate()) && Objects.equals(getLeaveDate(), that.getLeaveDate()) && Objects.equals(getAdditionalInfo(), that.getAdditionalInfo()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getRoom(), that.getRoom());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getArrivalDate(), getLeaveDate(), getAdditionalInfo(), getGuestId(), getRoomId());
+        return Objects.hash(getId(), getArrivalDate(), getLeaveDate(), getAdditionalInfo(), getUser(), getRoom());
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", arrivalDate=" + arrivalDate +
+                ", leaveDate=" + leaveDate +
+                ", additionalInfo='" + additionalInfo + '\'' +
+                ", user=" + user +
+                ", room=" + room +
+                '}';
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public int getId() {
@@ -71,19 +86,5 @@ public class Reservation implements IDable{
         this.additionalInfo = additionalInfo;
     }
 
-    public int getGuestId() {
-        return guestId;
-    }
 
-    public void setGuestId(int guestId) {
-        this.guestId = guestId;
-    }
-
-    public int getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
 }
