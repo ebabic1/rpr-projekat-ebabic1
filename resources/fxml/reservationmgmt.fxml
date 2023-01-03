@@ -27,7 +27,6 @@
    </rowConstraints>
    <children>
       <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonPressed" text="Edit" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButtonPressed" text="Add" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonPressed" text="Delete" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
       <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="197.0" promptText="Search..." GridPane.columnSpan="2">
          <GridPane.margin>
