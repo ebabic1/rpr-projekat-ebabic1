@@ -88,7 +88,6 @@ public class GuestMgmtController {
         catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void refreshGuests()  {
@@ -127,6 +126,31 @@ public class GuestMgmtController {
     }
 
     public void checkInButtonPressed(ActionEvent actionEvent) {
+        User selectedGuest = (User) guestsTabela.getSelectionModel().getSelectedItem();
+        if(selectedGuest!=null)
+        {
+            Integer uId = selectedGuest.getId();
+            try {
+
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/addreservation.fxml"));
+                loader.setController(new AddUpdateReservationController(null,uId));
+                Parent root = loader.load();
+                stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+                stage.setResizable(false);
+                stage.setOnHiding(event -> {
+                    refreshGuests();
+                } );
+                if(uId != null) {
+                    stage.setTitle("Edit a reservation");
+                }
+                else stage.setTitle("Add a reservation");
+                stage.show();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 }
