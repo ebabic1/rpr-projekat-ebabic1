@@ -20,6 +20,7 @@ public class AddUpdateRoomController {
     public Button cancelButton;
     public TextField priceField;
     public TextField maxPersonsField;
+    public TextField roomNumberField;
     public TextArea descriptionField;
     public GridPane addupdateGridPane;
     private Integer rId;
@@ -30,6 +31,7 @@ public class AddUpdateRoomController {
         Bindings.bindBidirectional(priceField.textProperty(),roomModel.priceFieldProperty(),new NumberStringConverter());
         maxPersonsField.textProperty().bindBidirectional(roomModel.maxPersonsFieldProperty(),new NumberStringConverter());
         descriptionField.textProperty().bindBidirectional(roomModel.descriptionFieldProperty());
+        roomNumberField.textProperty().bindBidirectional(roomModel.roomNumberFieldProperty(),new NumberStringConverter());
         if (rId != null) {
             try {
                 roomModel.fromRoom(roomManager.getById(rId));
