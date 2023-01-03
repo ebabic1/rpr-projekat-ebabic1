@@ -12,23 +12,23 @@ public class ReservationDaoSQLImplementation extends AbstractDao<Reservation> im
     @Override
     public Map<String, Object> objectToRow(Reservation object){
         Map<String, Object> row = new TreeMap<>();
-        row.put("reservationId",object.getId());
+        row.put("id",object.getId());
         row.put("arrivalDate",object.getArrivalDate());
         row.put("leaveDate",object.getLeaveDate());
         row.put("additionalInfo",object.getAdditionalInfo());
-        row.put("roomId",object.getRoomId());
-        row.put("guestId",object.getGuestId());
+        row.put("roomId",object.getRoom().getId());
+        row.put("userId",object.getUser().getId());
         return row;
     }
     @Override
     public Reservation rowToObject(ResultSet resultSet) throws SQLException {
         Reservation reservation = new Reservation();
-        reservation.setId(resultSet.getInt("reservationId"));
+        reservation.setId(resultSet.getInt("id"));
         reservation.setArrivalDate(resultSet.getDate("arrivalDate"));
         reservation.setLeaveDate(resultSet.getDate("leaveDate"));
         reservation.setAdditionalInfo(resultSet.getString("additionalInfo"));
-        reservation.setRoomId(resultSet.getInt("roomId"));
-        reservation.setGuestId(resultSet.getInt("guestId"));
+        reservation.setRoom(DaoFactory.roomDao().getById(resultSet.getInt("roomId")));
+        reservation.setUser(DaoFactory.userDao().getById(resultSet.getInt("userId")));
         return reservation;
     }
     @Override
@@ -41,12 +41,12 @@ public class ReservationDaoSQLImplementation extends AbstractDao<Reservation> im
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()){
                 Reservation reservation = new Reservation();
-                reservation.setId(resultSet.getInt("reservationId"));
+                reservation.setId(resultSet.getInt("id"));
                 reservation.setArrivalDate(resultSet.getDate("arrivalDate"));
                 reservation.setLeaveDate(resultSet.getDate("leaveDate"));
                 reservation.setAdditionalInfo(resultSet.getString("additionalInfo"));
-                reservation.setRoomId(resultSet.getInt("roomId"));
-                reservation.setGuestId(resultSet.getInt("guestId"));
+                reservation.setRoom(DaoFactory.roomDao().getById(resultSet.getInt("roomId")));
+                reservation.setUser(DaoFactory.userDao().getById(resultSet.getInt("userId")));
                 reservationList.add(reservation);
             }
             resultSet.close();
