@@ -65,6 +65,9 @@ public class DashboardController {
         mainBorderPane.setCenter(gridPane);
     }
 
-    public void resManPressed(ActionEvent actionEvent) {
+    public void resManPressed(ActionEvent actionEvent) throws IOException {
+        GridPane gridPane = FXMLLoader.load(getClass().getResource("/fxml/reservationmgmt.fxml"));
+        gridPane.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+        mainBorderPane.setCenter(gridPane);
     }
 }
