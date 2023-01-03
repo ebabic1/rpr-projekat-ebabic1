@@ -40,6 +40,7 @@ public class RoomMgmtController {
         maxPersonsColumn.setCellValueFactory(new PropertyValueFactory<>("maxPersons"));
         availableColumn.setCellValueFactory(new PropertyValueFactory<>("available"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        refreshRooms();
     }
     private void addupdateScene(Integer rId) {
         try {
@@ -65,8 +66,9 @@ public class RoomMgmtController {
     public void editButtonPressed(ActionEvent actionEvent) {
         Room selectedRoom = (Room) roomsTable.getSelectionModel().getSelectedItem();
         Integer rId = selectedRoom.getId();
-        if(rId == null) return;
-        addupdateScene(rId);
+        if(rId != null) {
+            addupdateScene(rId);
+        }
     }
 
     public void addButtonPressed(ActionEvent actionEvent) {
@@ -81,7 +83,7 @@ public class RoomMgmtController {
             roomManager.delete(uId);
             refreshRooms();
         } catch (RoomException e) {
-            throw new RuntimeException(e);
+            new Alert(Alert.AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
         }
     }
     private void refreshRooms() {
