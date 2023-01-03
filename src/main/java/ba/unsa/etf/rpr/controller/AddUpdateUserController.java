@@ -70,7 +70,6 @@ public class AddUpdateUserController {
     }
     public void okPressed(ActionEvent actionEvent) {
         User u = userModel.toUser();
-
             try {
                 if (uId != null) {
                     u.setId(uId);
@@ -83,7 +82,6 @@ public class AddUpdateUserController {
             } catch (UserException e) {
                 new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
             }
-
     }
 
     public void cancelPressed(ActionEvent actionEvent) {
