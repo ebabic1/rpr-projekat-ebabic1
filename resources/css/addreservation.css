@@ -1,0 +1,6 @@
+.poljeNijeIspravno{
+    -fx-text-fill: lightpink;
+}
+.poljeIspravno{
+    -fx-text-fill: yellowgreen;
+}
