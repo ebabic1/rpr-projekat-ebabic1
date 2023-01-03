@@ -17,7 +17,7 @@ public class RoomManager {
     }
     public Room add(Room r) throws RoomException {
         try {
-            DaoFactory.roomDao().add(r);
+            Room addedRoom = DaoFactory.roomDao().add(r);
         } catch (SQLException e) {
             throw new RoomException(e.getMessage());
         }
