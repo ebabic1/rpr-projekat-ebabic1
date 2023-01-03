@@ -48,7 +48,7 @@
       <Label text="Password:" textFill="WHITE" GridPane.rowIndex="8" />
       <TextField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
       <TextField fx:id="phoneField" prefHeight="25.0" prefWidth="217.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <Label text="Phone" textFill="WHITE" GridPane.rowIndex="5" />
+      <Label text="Phone:" textFill="WHITE" GridPane.rowIndex="5" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
         <buttons>
           <Button fx:id="okButton" defaultButton="true" mnemonicParsing="false" onAction="#okPressed" text="Ok" />
