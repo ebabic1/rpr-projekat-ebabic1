@@ -13,16 +13,32 @@ public class RoomModel {
     public SimpleDoubleProperty priceField = new SimpleDoubleProperty();
     public SimpleStringProperty descriptionField = new SimpleStringProperty();
     public SimpleIntegerProperty maxPersonsField = new SimpleIntegerProperty();
+    public SimpleIntegerProperty roomNumberField = new SimpleIntegerProperty();
+
+    public int getRoomNumberField() {
+        return roomNumberField.get();
+    }
+
+    public SimpleIntegerProperty roomNumberFieldProperty() {
+        return roomNumberField;
+    }
+
+    public void setRoomNumberField(int roomNumberField) {
+        this.roomNumberField.set(roomNumberField);
+    }
+
     public void fromRoom(Room r) {
         this.priceField.set(r.getPrice());
         this.descriptionField.set(r.getDescription());
         this.maxPersonsField.set(r.getMaxPersons());
+        this.roomNumberField.set(r.getId());
     }
     public Room toRoom() {
         Room r = new Room();
         r.setPrice(this.priceField.getValue());
         r.setDescription(this.descriptionField.getValue());
         r.setMaxPersons(this.maxPersonsField.getValue());
+        r.setId(this.roomNumberField.getValue());
         return r;
     }
 
