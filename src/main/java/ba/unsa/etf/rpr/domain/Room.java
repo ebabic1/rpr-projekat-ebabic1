@@ -15,13 +15,7 @@ public class Room implements IDable{
 
     @Override
     public String toString() {
-        return "Room{" +
-                "id=" + Id +
-                ", maxPersons=" + maxPersons +
-                ", description='" + description + '\'' +
-                ", available=" + available +
-                ", price=" + price +
-                '}';
+        return ""+Id;
     }
 
     @Override
