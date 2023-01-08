@@ -74,7 +74,7 @@ public class AddUpdateReservationController {
         leaveDatePicker.setValue(LocalDate.now());
        arrivalDatePicker.valueProperty().addListener((obs,o,n) ->{
             long daysBetween = ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),leaveDatePicker.getValue());
-            if(daysBetween < 0) {
+           if(roomId != null && (daysBetween < 0 || ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),LocalDate.now()) > 0 || ChronoUnit.DAYS.between(leaveDatePicker.getValue(),LocalDate.now())>0))  {
                 priceLabel.getStyleClass().removeAll("poljeIspravno");
                 priceLabel.getStyleClass().add("poljeNijeIspravno");
                 priceLabel.setText("Dates incorrect!");
@@ -92,7 +92,7 @@ public class AddUpdateReservationController {
        });
         leaveDatePicker.valueProperty().addListener((obs,o,n) ->{
             long daysBetween = ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),leaveDatePicker.getValue());
-            if(daysBetween < 0) {
+            if(roomId != null && (daysBetween < 0 || ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),LocalDate.now()) > 0 || ChronoUnit.DAYS.between(leaveDatePicker.getValue(),LocalDate.now())>0))  {
                 priceLabel.getStyleClass().removeAll("poljeIspravno");
                 priceLabel.getStyleClass().add("poljeNijeIspravno");
                 priceLabel.setText("Dates incorrect!");
@@ -108,12 +108,38 @@ public class AddUpdateReservationController {
                 }
             }
         });
-        roomNumberComboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable,
-                                String oldValue, String newValue) {
-                roomId = Integer.parseInt(newValue);
-                System.out.println(roomId);
+        roomNumberComboBox.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                try {
+                    roomId = DaoFactory.roomDao().getByNumber(Integer.parseInt(newValue)).getId();
+                    System.out.println(roomId);
+                } catch (NumberFormatException e){
+                    throw new RoomException("Invalid room number");
+                } catch (SQLException e) {
+                    throw new RoomException("Invalid room number");
+                }
+                Room room = roomManager.getById(roomId);
+                if(!priceLabel.textProperty().toString().trim().isEmpty()){
+                    long daysBetween = ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),leaveDatePicker.getValue());
+                    if(roomId != null && (daysBetween < 0 || ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),LocalDate.now()) > 0 || ChronoUnit.DAYS.between(leaveDatePicker.getValue(),LocalDate.now())>0)){
+                        priceLabel.getStyleClass().removeAll("poljeIspravno");
+                        priceLabel.getStyleClass().add("poljeNijeIspravno");
+                        priceLabel.setText("Dates incorrect!");
+                    } else {
+                        try {
+                            priceLabel.setText(String.valueOf(daysBetween * DaoFactory.roomDao().getById(roomId).getPrice()));
+                            priceLabel.getStyleClass().removeAll("poljeNijeIspravno");
+                            priceLabel.getStyleClass().add("poljeIspravno");
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            } catch (RoomException e) {
+                priceLabel.getStyleClass().removeAll("poljeIspravno");
+                priceLabel.getStyleClass().add("poljeNijeIspravno");
+                priceLabel.setText(e.getMessage());
+                roomId = null;
             }
         });
         if(rId != null) {
@@ -125,6 +151,7 @@ public class AddUpdateReservationController {
         }
     }
     public void okPressed(ActionEvent actionEvent) {
+        if(roomId != null)
         try {
             reservationModel.setRoom(roomManager.getById(roomId));
             reservationModel.setUser(userManager.getById(uId));
