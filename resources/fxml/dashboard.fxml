@@ -63,7 +63,7 @@
             <Button id="rManButton" fx:id="rManButton" mnemonicParsing="false" onAction="#rManPressed" prefHeight="70.0" prefWidth="300.0" styleClass="sidebarButton" text="Room Management" textFill="WHITE" />
             <Button id="gManButton" fx:id="gManButton" mnemonicParsing="false" onAction="#gManPressed" prefHeight="70.0" prefWidth="300.0" styleClass="sidebarButton" text="Guest Management" textFill="WHITE" />
             <Button fx:id="resManButton" mnemonicParsing="false" onAction="#resManPressed" prefHeight="70.0" prefWidth="300.0" styleClass="sidebarButton" text="Reservation Management" />
-            <Button id="logoutButton" fx:id="logoutButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onMouseClicked="#logoutClicked" style="-fx-background-color: lightblue;" text="Logout" />
+            <Button id="logoutButton" fx:id="logoutButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#logoutClicked" prefHeight="25.0" prefWidth="275.0" style="-fx-background-color: lightblue;" text="Logout" />
          </children>
       </VBox>
    </left>
