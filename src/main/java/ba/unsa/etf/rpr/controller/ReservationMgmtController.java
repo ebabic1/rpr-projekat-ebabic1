@@ -65,6 +65,8 @@ public class ReservationMgmtController {
         arrivalDateColumn.setCellValueFactory(new PropertyValueFactory<>("arrivalDate"));
         leaveDateColumn.setCellValueFactory(new PropertyValueFactory<>("leaveDate"));
         additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
+        roomIdColumn.setCellValueFactory(new PropertyValueFactory<>("room"));
+        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
         refreshReservations();
 
     }
