@@ -19,6 +19,7 @@ public class RoomDaoSQLImplementation extends AbstractDao<Room> implements RoomD
         room.setDescription(resultSet.getString("description"));
         room.setAvailable(resultSet.getInt("available"));
         room.setPrice(resultSet.getDouble("price"));
+        room.setRoomNumber(resultSet.getInt("roomNumber"));
         return room;
     }
 
@@ -30,6 +31,7 @@ public class RoomDaoSQLImplementation extends AbstractDao<Room> implements RoomD
         item.put("description",object.getDescription());
         item.put("available",object.getAvailable());
         item.put("price",object.getPrice());
+        item.put("roomNumber",object.getRoomNumber());
         return item;
     }
     @Override
@@ -77,5 +79,20 @@ public class RoomDaoSQLImplementation extends AbstractDao<Room> implements RoomD
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Room getByNumber(int roomNumber) throws SQLException {
+        String query = "SELECT * FROM Rooms WHERE roomNumber = ?";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setInt(1,roomNumber);
+        ResultSet resultSet = stmt.executeQuery();
+        Room object = null;
+        if (resultSet.next()){
+            object = rowToObject(resultSet);
+            resultSet.close();
+        }
+        if (object == null) throw new SQLException("Object not found!");
+        return object;
     }
 }
