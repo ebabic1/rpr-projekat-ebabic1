@@ -1,5 +1,8 @@
 package ba.unsa.etf.rpr.domain;
 
+import ba.unsa.etf.rpr.dao.DaoFactory;
+
+import java.sql.SQLException;
 import java.util.Objects;
 
 /**
@@ -12,22 +15,35 @@ public class Room implements IDable{
     private String description;
     private int available;
     private double price;
+    private int roomNumber;
 
-    @Override
-    public String toString() {
-        return ""+Id;
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Room room)) return false;
-        return getId() == room.getId() && getMaxPersons() == room.getMaxPersons() && getAvailable() == room.getAvailable() && getPrice() == room.getPrice() && Objects.equals(getDescription(), room.getDescription());
+        return getId() == room.getId() && getMaxPersons() == room.getMaxPersons() && getAvailable() == room.getAvailable() && Double.compare(room.getPrice(), getPrice()) == 0 && roomNumber == room.roomNumber && Objects.equals(getDescription(), room.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getMaxPersons(), getDescription(), getAvailable(), getPrice());
+        return Objects.hash(getId(), getMaxPersons(), getDescription(), getAvailable(), getPrice(), roomNumber);
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return String.valueOf(DaoFactory.roomDao().getById(Id).getRoomNumber());
+        } catch (SQLException e) {
+            return new String();
+        }
     }
 
     public double getPrice() {
