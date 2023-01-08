@@ -80,7 +80,6 @@ public class RoomDaoSQLImplementation extends AbstractDao<Room> implements RoomD
         }
         return null;
     }
-
     @Override
     public Room getByNumber(int roomNumber) throws SQLException {
         String query = "SELECT * FROM Rooms WHERE roomNumber = ?";

@@ -75,11 +75,6 @@ public class UserDaoSQLImplementation extends AbstractDao<User> implements UserD
     }
 
 
-
-
-
-
-
     private User makeNewUser(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(resultSet.getInt("id"));
