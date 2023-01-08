@@ -31,7 +31,6 @@ public class ReservationDaoSQLImplementation extends AbstractDao<Reservation> im
         reservation.setUser(DaoFactory.userDao().getById(resultSet.getInt("userId")));
         return reservation;
     }
-
     @Override
     public Reservation searchByUser(int id) throws SQLException {
         String query = "SELECT * FROM Reservations WHERE userId = ?";
