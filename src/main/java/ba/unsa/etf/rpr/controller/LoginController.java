@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
@@ -55,11 +56,11 @@ public class LoginController {
         });
     }
     public void loginClicked(ActionEvent actionEvent) throws IOException {
-        /*if (usernameField.getText().trim().isEmpty() || passwordField.getText().trim().isEmpty()){
+        User u = null;
+       if (usernameField.getText().trim().isEmpty() || passwordField.getText().trim().isEmpty()){
             return;
         }
-        UserDaoSQLImplementation uDao = new UserDaoSQLImplementation();
-        User u = DaoFactory.userDao().getByUsername(usernameField.getText());
+        u = DaoFactory.userDao().getByUsername(usernameField.getText());
         if (u == null){
             System.out.println("Korisnik nije nađen");
             userNotfoundLabel.setVisible(true);
@@ -79,29 +80,35 @@ public class LoginController {
         else {
             wrongPasswordLabel.setVisible(false);
         }
-        if(u.getAdmin() == 0){
-            Alert warning = new Alert(Alert.AlertType.ERROR);
-            warning.setTitle("Missing privileges");
-            passwordField.getStyleClass().removeAll("poljeIspravno");
-            passwordField.getStyleClass().add("poljeNijeIspravno");
-            usernameField.getStyleClass().removeAll("poljeIspravno");
-            usernameField.getStyleClass().add("poljeNijeIspravno");
-            warning.showAndWait();
-            return;
-        }*/
         Node n = (Node) actionEvent.getSource();
         Stage s1 = (Stage) n.getScene().getWindow();
         s1.close();
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/dashboard.fxml"));
-        Parent root = loader.load();
-        DashboardController dashboardController = loader.getController();
-        dashboardController.labelIme.setText(usernameField.getText());
-        dashboardController.mainPane.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+        Scene scene = null;
+        if(u.getAdmin() != 0){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/dashboard.fxml"));
+            Parent root = loader.load();
+            DashboardController dashboardController = loader.getController();
+            dashboardController.labelIme.setText(usernameField.getText());
+            dashboardController.mainPane.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+            scene = new Scene(root,USE_COMPUTED_SIZE,USE_COMPUTED_SIZE);
+
+        }
+        else{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/guestdashboard.fxml"));
+            Parent root = loader.load();
+            GuestDashboardController gDashboardController = loader.getController();
+            gDashboardController.nameLabel.setText(usernameField.getText());
+            try {
+                gDashboardController.roomNoLabel.setText(String.valueOf(DaoFactory.reservationDao().searchByUser(u.getId()).getRoom().getRoomNumber()));
+            } catch (SQLException e) {
+                gDashboardController.roomNoLabel.setText("You are not checked in!");
+            }
+            scene = new Scene(root,USE_COMPUTED_SIZE,USE_COMPUTED_SIZE);
+        }
+        stage.setScene(scene);
+        stage.setResizable(false);
         stage.setTitle("Dashboard");
-        stage.setScene(new Scene(root,USE_COMPUTED_SIZE,USE_COMPUTED_SIZE));
-        stage.setMinWidth(500);
-        stage.setMinHeight(550);
         stage.show();
     }
 }
