@@ -67,7 +67,7 @@
       <Label text="Additional info:" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="5" />
       <TextArea fx:id="additionalInfoTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5" GridPane.rowSpan="2" />
       <Label text="Price:" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-      <Label fx:id="priceLabel" text="Label" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+      <Label fx:id="priceLabel" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="4" />
       <ComboBox fx:id="roomNumberComboBox" editable="true" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
    </children>
 </GridPane>
