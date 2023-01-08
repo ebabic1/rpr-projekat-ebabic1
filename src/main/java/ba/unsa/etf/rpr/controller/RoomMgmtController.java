@@ -31,6 +31,7 @@ public class RoomMgmtController {
     public TableColumn maxPersonsColumn;
     public TableColumn descriptionColumn;
     public TableColumn availableColumn;
+    public TableColumn roomNumberColumn;
     private Integer rId;
     private RoomManager roomManager = new RoomManager();
     @FXML
@@ -40,6 +41,7 @@ public class RoomMgmtController {
         maxPersonsColumn.setCellValueFactory(new PropertyValueFactory<>("maxPersons"));
         availableColumn.setCellValueFactory(new PropertyValueFactory<>("available"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        roomNumberColumn.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
         refreshRooms();
     }
     private void addupdateScene(Integer rId) {
