@@ -7,23 +7,28 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * Abstract class for CRUD methods required in DAO layer
+ *
+ */
 public abstract class AbstractDao<T extends IDable> implements Dao<T> {
+    protected Connection connection = null;
+    private String tableName;
     public Connection getConnection() {
         return connection;
     }
-
-    protected Connection connection;
-    private String tableName;
     public AbstractDao(String tableName) {
-        this.tableName = tableName;
-        try {
-            final Properties login = new Properties();
-            login.load(new FileInputStream("src/main/java/ba/unsa/etf/rpr/login.properties"));
-            connection = DriverManager.getConnection(login.getProperty("connection.string"), login.getProperty("username"), login.getProperty("password"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(connection == null){
+            this.tableName = tableName;
+            try {
+                final Properties login = new Properties();
+                login.load(new FileInputStream("src/main/java/ba/unsa/etf/rpr/login.properties"));
+                connection = DriverManager.getConnection(login.getProperty("connection.string"), login.getProperty("username"), login.getProperty("password"));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     private Map.Entry<String,String> prepareInsertParts(Map<String,Object> row) {
@@ -43,23 +48,19 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
         return new AbstractMap.SimpleEntry<String,String>(columns.toString(),questions.toString());
     }
     @Override
-    public T getById(int id) {
+    public T getById(int id) throws SQLException {
         String query = "SELECT * FROM " + tableName + " WHERE id = ?";
-        try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1,id);
             ResultSet resultSet = stmt.executeQuery();
+            T object = null;
             if (resultSet.next()){
-                T object = rowToObject(resultSet);
+                object = rowToObject(resultSet);
                 resultSet.close();
-                return object;
             }
-            return null;
+            if (object == null) throw new SQLException("Object not found!");
+            return object;
 
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
     public abstract T rowToObject(ResultSet resultSet) throws SQLException;
     public abstract Map<String,Object> objectToRow(T object) throws SQLException;
@@ -94,7 +95,8 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
     public T update(T item) throws SQLException {
         Map<String,Object> row = objectToRow(item);
         String updateColumns = prepareUpdateParts(row);
-        String query = "UPDATE " + tableName + " SET " + updateColumns + "WHERE id = ?";
+        String query = "UPDATE " + tableName + " SET " + updateColumns + " WHERE id = ?";
+        System.out.println(query);
         PreparedStatement stmt = connection.prepareStatement(query);
         int counter = 1;
         for(Map.Entry<String,Object> entry : row.entrySet()) {
