@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class RoomManager {
+
     public void delete(int id) throws  RoomException {
         try {
             DaoFactory.roomDao().delete(id);
