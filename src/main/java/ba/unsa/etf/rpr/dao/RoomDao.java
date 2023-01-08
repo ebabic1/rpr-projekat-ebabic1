@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Room;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -15,4 +16,5 @@ public interface RoomDao extends Dao<Room> {
      */
     List<Room> searchByMaxPersons(int maxPersons);
     List<Room> searchByAvailable(int available);
+    Room getByNumber(int roomNumber) throws SQLException;
 }
