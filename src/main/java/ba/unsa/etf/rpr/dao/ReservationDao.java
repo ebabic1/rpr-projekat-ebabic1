@@ -18,5 +18,4 @@ public interface ReservationDao extends Dao<Reservation> {
      */
     List<Reservation> searchByDateRange(Date startDate, Date endDate);
     Reservation searchByUser(int id) throws SQLException;
-
 }
