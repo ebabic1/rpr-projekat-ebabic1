@@ -32,6 +32,19 @@ public class ReservationDaoSQLImplementation extends AbstractDao<Reservation> im
         return reservation;
     }
     @Override
+    public Reservation searchByUser(int id) throws SQLException {
+        String query = "SELECT * FROM Reservations WHERE userId = ?";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setInt(1,id);
+        ResultSet resultSet = stmt.executeQuery();
+        Reservation object = null;
+        if (resultSet.next()){
+            object = rowToObject(resultSet);
+            resultSet.close();
+        }
+        return object;
+    }
+    @Override
     public List<Reservation> searchByDateRange(java.sql.Date startDate, java.sql.Date endDate) {
         List<Reservation> reservationList = new ArrayList<>();
         String query = "SELECT * FROM Reservations WHERE arrivalDate > str_to_date('"+startDate.toString()+"',%Y-%m-%d) AND leaveDate < str_to_date('"+endDate.toString()+"',%Y-%m-%d)" ;
