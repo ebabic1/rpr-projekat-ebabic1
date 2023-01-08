@@ -31,14 +31,14 @@ public class RoomModel {
         this.priceField.set(r.getPrice());
         this.descriptionField.set(r.getDescription());
         this.maxPersonsField.set(r.getMaxPersons());
-        this.roomNumberField.set(r.getId());
+        this.roomNumberField.set(r.getRoomNumber());
     }
     public Room toRoom() {
         Room r = new Room();
         r.setPrice(this.priceField.getValue());
         r.setDescription(this.descriptionField.getValue());
         r.setMaxPersons(this.maxPersonsField.getValue());
-        r.setId(this.roomNumberField.getValue());
+        r.setRoomNumber(this.roomNumberField.getValue());
         return r;
     }
 
