@@ -36,10 +36,10 @@
       <TableView fx:id="reservationsTable" maxHeight="460.0" maxWidth="635.0" prefHeight="461.0" prefWidth="616.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowSpan="2147483647">
          <columns>
             <TableColumn fx:id="idColumn" prefWidth="41.0" text="id" />
-            <TableColumn fx:id="arrivalDateColumn" prefWidth="148.0" text="arrivalDate" />
+            <TableColumn fx:id="arrivalDateColumn" prefWidth="120.0" text="arrivalDate" />
             <TableColumn fx:id="leaveDateColumn" prefWidth="102.0" text="leaveDate" />
-            <TableColumn fx:id="additionalInfoColumn" prefWidth="142.0" text="additionalInfo" />
-            <TableColumn fx:id="roomIdColumn" minWidth="20.0" prefWidth="54.0" text="roomId" />
+            <TableColumn fx:id="additionalInfoColumn" prefWidth="133.0" text="additionalInfo" />
+            <TableColumn fx:id="roomIdColumn" minWidth="20.0" prefWidth="91.0" text="roomNumber" />
             <TableColumn fx:id="userIdColumn" prefWidth="61.0" text="userId" />
          </columns>
       </TableView>
