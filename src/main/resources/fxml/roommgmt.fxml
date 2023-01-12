@@ -12,7 +12,8 @@
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="940.0" style="-fx-background-color: #404258;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controller.RoomMgmtController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="181.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="194.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="114.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="353.0" minWidth="10.0" prefWidth="208.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="0.0" prefWidth="286.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="368.0" minWidth="10.0" prefWidth="136.0" />
@@ -34,7 +35,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </TextField>
-      <TableView fx:id="roomsTable" maxHeight="460.0" maxWidth="635.0" prefHeight="461.0" prefWidth="616.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowSpan="2147483647">
+      <TableView fx:id="roomsTable" maxHeight="460.0" maxWidth="635.0" prefHeight="461.0" prefWidth="616.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowSpan="2147483647">
          <columns>
             <TableColumn fx:id="idColumn" prefWidth="111.0" text="id" />
             <TableColumn fx:id="roomNumberColumn" prefWidth="89.0" text="roomNumber" />
@@ -44,6 +45,7 @@
             <TableColumn fx:id="descriptionColumn" minWidth="20.0" prefWidth="86.0" text="description" />
          </columns>
       </TableView>
+      <Button fx:id="searchButton" defaultButton="true" mnemonicParsing="false" onAction="#searchButtonPressed" text="Search" GridPane.columnIndex="2" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
