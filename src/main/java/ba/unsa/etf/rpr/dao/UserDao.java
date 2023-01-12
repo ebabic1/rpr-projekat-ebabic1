@@ -20,6 +20,6 @@ public interface UserDao extends Dao<User> {
      * @return list of guests
      */
     List<User> searchByCountry(String countryName);
-
+    List<User> searchByName(String name);
     User getByUsername(String text);
 }
