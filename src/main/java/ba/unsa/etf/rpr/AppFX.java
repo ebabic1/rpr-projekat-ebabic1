@@ -14,7 +14,7 @@ public class AppFX extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AppFX.class.getResource("/fxml/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE);
         stage.setTitle("Hello!");
         stage.setScene(scene);
