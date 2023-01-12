@@ -5,6 +5,9 @@ import java.io.PrintWriter;
 import java.sql.*;
 import java.util.Properties;
 
+import ba.unsa.etf.rpr.business.ReservationManager;
+import ba.unsa.etf.rpr.business.RoomManager;
+import ba.unsa.etf.rpr.business.UserManager;
 import ba.unsa.etf.rpr.dao.RoomDaoSQLImplementation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +39,21 @@ public class App {
         helpFormatter.printOptions(printWriter, 150, options, 2, 7);
         printWriter.close();
     }
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
+        Options options = addOptions();
+        CommandLineParser commandLineParser = new DefaultParser();
+        CommandLine commandLine = commandLineParser.parse(options, args);
+        if(commandLine.hasOption(getReservations.getOpt()) || commandLine.hasOption(getReservations.getLongOpt())){
+            ReservationManager reservationManager = new ReservationManager();
+            reservationManager.getAll().forEach(reservation -> System.out.println(reservation));
+        }
+        else if(commandLine.hasOption(getRooms.getOpt()) || commandLine.hasOption(getRooms.getLongOpt())){
+            RoomManager roomManager = new RoomManager();
+            roomManager.getAll().forEach(room -> System.out.println(room));
+        }
+        else if(commandLine.hasOption(getUsers.getOpt()) || commandLine.hasOption(getUsers.getLongOpt())){
+            UserManager userManager = new UserManager();
+            userManager.getAll().forEach(user -> System.out.println(user));
+        }
     }
 }
