@@ -32,6 +32,7 @@ public class RoomMgmtController {
     public TableColumn descriptionColumn;
     public TableColumn availableColumn;
     public TableColumn roomNumberColumn;
+    public Button searchButton;
     private Integer rId;
     private RoomManager roomManager = new RoomManager();
     @FXML
@@ -90,10 +91,23 @@ public class RoomMgmtController {
     }
     private void refreshRooms() {
         try {
-            roomsTable.setItems(FXCollections.observableList(DaoFactory.roomDao().getAll()));
+            if(searchTextField.getText().trim().isEmpty()) roomsTable.setItems(FXCollections.observableList(DaoFactory.roomDao().getAll()));
+            else {
+                try {
+                    Integer broj = Integer.parseInt(searchTextField.getText());
+                    roomsTable.setItems(FXCollections.observableList(DaoFactory.roomDao().searchByNumer(broj)));
+
+                } catch (NumberFormatException e) {
+
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public void searchButtonPressed(ActionEvent actionEvent) {
+        refreshRooms();
+    }
 }
