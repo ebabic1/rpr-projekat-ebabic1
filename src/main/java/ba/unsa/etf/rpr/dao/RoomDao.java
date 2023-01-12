@@ -17,4 +17,6 @@ public interface RoomDao extends Dao<Room> {
     List<Room> searchByMaxPersons(int maxPersons);
     List<Room> searchByAvailable(int available);
     Room getByNumber(int roomNumber) throws SQLException;
+
+    public List<Room> searchByNumer(int number);
 }
