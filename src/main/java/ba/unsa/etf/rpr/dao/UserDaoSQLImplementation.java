@@ -87,7 +87,12 @@ public class UserDaoSQLImplementation extends AbstractDao<User> implements UserD
         user.setPassword(resultSet.getString("password"));
         return user;
     }
-
+    @Override
+    public List<User> searchByName(String name) {
+        List<User> userList = new ArrayList<>();
+        String query = "SELECT * FROM Users WHERE Lower(Concat(firstName,lastName)) LIKE Concat('%','"+name.toLowerCase()+"','%')";
+        return getUsers(userList, query);
+    }
     @Override
     public List<User> searchByCity(String cityName)
     {
