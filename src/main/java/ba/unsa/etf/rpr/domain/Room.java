@@ -36,16 +36,10 @@ public class Room implements IDable{
     public int hashCode() {
         return Objects.hash(getId(), getMaxPersons(), getDescription(), getAvailable(), getPrice(), roomNumber);
     }
-
     @Override
     public String toString() {
-        try {
-            return String.valueOf(DaoFactory.roomDao().getById(Id).getRoomNumber());
-        } catch (SQLException e) {
-            return new String();
-        }
+       return String.valueOf(roomNumber);
     }
-
     public double getPrice() {
         return price;
     }
