@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr.dao;
 import ba.unsa.etf.rpr.domain.Room;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -38,29 +40,22 @@ public class RoomDaoSQLImplementation extends AbstractDao<Room> implements RoomD
     public List<Room> searchByMaxPersons(int maxPersons) {
         List<Room> roomList = new ArrayList<>();
         String query = "SELECT * FROM Rooms WHERE MaxPersons >= ?";
-        try {
-            PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1,maxPersons);
-            ResultSet resultSet = stmt.executeQuery();
-            while (resultSet.next()){
-                Room room = new Room();
-                room.setId(resultSet.getInt("roomId"));
-                room.setMaxPersons(resultSet.getInt("maxPersons"));
-                room.setDescription(resultSet.getString("description"));
-                room.setAvailable(resultSet.getInt("available"));
-                roomList.add(room);
-            }
-            resultSet.close();
-            return roomList;
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return getRooms(maxPersons, roomList, query);
     }
     @Override
     public List<Room> searchByAvailable(int available) {
         List<Room> roomList = new ArrayList<>();
         String query = "SELECT * FROM Rooms WHERE available = ?";
+        return getRooms(available, roomList, query);
+    }
+    public List<Room> searchByNumer(int number){
+        List<Room> roomList = new ArrayList<>();
+        String query = "SELECT * FROM Rooms WHERE roomNumber = ?";
+        return getRooms(number, roomList, query);
+    }
+
+    @Nullable
+    private List<Room> getRooms(int available, List<Room> roomList, String query) {
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1,available);
