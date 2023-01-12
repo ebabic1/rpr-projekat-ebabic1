@@ -5,6 +5,7 @@ import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.Reservation;
 import ba.unsa.etf.rpr.exceptions.ReservationException;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
@@ -54,7 +56,23 @@ public class ReservationMgmtController {
     }
     private void refreshReservations() {
         try {
-            reservationsTable.setItems(FXCollections.observableList(DaoFactory.reservationDao().getAll()));
+            if(searchTextField.getText().trim().isEmpty()) reservationsTable.setItems(FXCollections.observableList(DaoFactory.reservationDao().getAll()));
+            else {
+                ObservableList<Reservation> observableList = FXCollections.observableArrayList();
+                try {
+                    Integer broj = Integer.parseInt(searchTextField.getText());
+                    try {
+                        Reservation reservation = DaoFactory.reservationDao().getById(broj);
+                        observableList.add(reservation);
+
+                    } catch (SQLException e) {
+
+                    }
+                    reservationsTable.setItems(observableList);
+                } catch (NumberFormatException e) {
+
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -92,5 +110,9 @@ public class ReservationMgmtController {
         } catch (ReservationException e) {
             new Alert(Alert.AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
         }
+    }
+
+    public void searchButtonPressed(ActionEvent actionEvent) {
+        refreshReservations();
     }
 }
