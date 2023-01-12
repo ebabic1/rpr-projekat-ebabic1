@@ -5,6 +5,7 @@ import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.User;
 import ba.unsa.etf.rpr.exceptions.UserException;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -37,9 +38,9 @@ public class GuestMgmtController {
     public TableColumn<User,String> emailColumn;
     public TableColumn<User,String> phoneColumn;
     public TableView guestsTabela;
-    private List<User> userList = new ArrayList<>();
     private final UserManager userManager = new UserManager();
-    private FilteredList<User> filteredList = new FilteredList<>(FXCollections.observableList(userList),b->true);
+    public Button searchButton;
+
     private void exit(ActionEvent actionEvent){
         Node n = (Node) actionEvent.getSource();
         Stage s1 = (Stage) n.getScene().getWindow();
@@ -54,17 +55,6 @@ public class GuestMgmtController {
         countryColumn.setCellValueFactory(new PropertyValueFactory<User,String>("country"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<User,String>("email"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<User,String>("phone"));
-        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredList.setPredicate(user -> {
-                if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-                    return true;
-                }
-                String keyword = newValue.toLowerCase();
-                if ((user.getFirstName() + user.getLastName()).toLowerCase().contains(keyword.replaceAll(" ", "")))
-                    return true;
-                return false;
-            });
-        });
         refreshGuests();
     }
 
@@ -92,10 +82,9 @@ public class GuestMgmtController {
 
     private void refreshGuests()  {
         try {
-            userList = DaoFactory.userDao().getAll();
-            //SortedList<User> userSortedList = new SortedList<>(filteredList);
-            //userSortedList.comparatorProperty().bind(guestsTabela.comparatorProperty());
-            guestsTabela.setItems(FXCollections.observableList(userList));
+            if(searchTextField.getText().trim().isEmpty()) guestsTabela.setItems(FXCollections.observableList(DaoFactory.userDao().getAll()));
+            else guestsTabela.setItems(FXCollections.observableList(DaoFactory.userDao().searchByName(searchTextField.getText())));
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -152,5 +141,9 @@ public class GuestMgmtController {
             }
         }
 
+    }
+
+    public void searchButtonPressed(ActionEvent actionEvent) {
+        refreshGuests();
     }
 }
