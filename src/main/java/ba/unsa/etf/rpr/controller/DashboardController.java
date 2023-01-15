@@ -18,6 +18,9 @@ import java.sql.SQLException;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
+/**
+ * JavaFX controller class for dashboard navigation
+ */
 public class DashboardController {
     @FXML
     public GridPane mainPane;
@@ -59,6 +62,11 @@ public class DashboardController {
 
     }
 
+    /**
+     * Logout button event handler
+     * @param mouseEvent
+     * @throws IOException
+     */
     public void logoutClicked(MouseEvent mouseEvent) throws IOException {
         Node n = (Node) mouseEvent.getSource();
         Stage s1 = (Stage) n.getScene().getWindow();
@@ -71,24 +79,41 @@ public class DashboardController {
         stage.show();
     }
 
+    /**
+     * Guest management button event handler
+     * @param mouseEvent
+     * @throws IOException
+     */
     public void gManPressed(ActionEvent mouseEvent) throws IOException {
         GridPane gridPane = FXMLLoader.load(getClass().getResource("/fxml/guestmgmt.fxml"));
         gridPane.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
         mainBorderPane.setCenter(gridPane);
     }
-
+    /**
+     * Room management button event handler
+     * @param mouseEvent
+     * @throws IOException
+     */
     public void rManPressed(ActionEvent mouseEvent) throws IOException {
         GridPane gridPane = FXMLLoader.load(getClass().getResource("/fxml/roommgmt.fxml"));
         gridPane.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
         mainBorderPane.setCenter(gridPane);
     }
-
+    /**
+     * Reservation management button event handler
+     * @param actionEvent
+     * @throws IOException
+     */
     public void resManPressed(ActionEvent actionEvent) throws IOException {
         GridPane gridPane = FXMLLoader.load(getClass().getResource("/fxml/reservationmgmt.fxml"));
         gridPane.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
         mainBorderPane.setCenter(gridPane);
     }
-
+    /**
+     * Dashboard button management button event handler
+     * @param actionEvent
+     * @throws IOException
+     */
     public void dBrdPressed(ActionEvent actionEvent) {
         try {
             totalGuestsLabel.setText(String.valueOf(DaoFactory.userDao().getAll().size()));
