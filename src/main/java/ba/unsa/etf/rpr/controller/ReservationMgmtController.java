@@ -14,15 +14,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
+/**
+ * JavaFX controller class for the reservation manager window
+ * @author Eldar Babić
+ */
 public class ReservationMgmtController {
     public Button editButton;
-    public Button addButton;
     public Button deleteButton;
     public TextField searchTextField;
     public TableView reservationsTable;
@@ -33,6 +33,12 @@ public class ReservationMgmtController {
     public TableColumn userIdColumn;
     public TableColumn roomIdColumn;
     private ReservationManager reservationManager = new ReservationManager();
+
+    /**
+     * Opens window for addition or alteration of specified reservation
+     * @param rId room ID of referenced row
+     * @param uId user ID of referenced row
+     */
     private void addupdateScene(Integer rId, Integer uId){
         try {
             Stage stage = new Stage();
@@ -54,6 +60,10 @@ public class ReservationMgmtController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Refreshes reservation table based on search field contents
+     */
     private void refreshReservations() {
         try {
             if(searchTextField.getText().trim().isEmpty()) reservationsTable.setItems(FXCollections.observableList(DaoFactory.reservationDao().getAll()));
@@ -64,7 +74,6 @@ public class ReservationMgmtController {
                     try {
                         Reservation reservation = DaoFactory.reservationDao().getById(broj);
                         observableList.add(reservation);
-
                     } catch (SQLException e) {
 
                     }
@@ -88,6 +97,11 @@ public class ReservationMgmtController {
         refreshReservations();
 
     }
+
+    /**
+     * Edit button event handler
+     * @param actionEvent
+     */
     public void editButtonPressed(ActionEvent actionEvent) {
         Reservation selectedReservation = (Reservation) reservationsTable.getSelectionModel().getSelectedItem();
         Integer rId = selectedReservation.getId();
@@ -97,10 +111,10 @@ public class ReservationMgmtController {
         }
     }
 
-    public void addButtonPressed(ActionEvent actionEvent) {
-
-    }
-
+    /**
+     * Delete button event handler
+     * @param actionEvent
+     */
     public void deleteButtonPressed(ActionEvent actionEvent) {
         Reservation selectedReservation = (Reservation) reservationsTable.getSelectionModel().getSelectedItem();
         Integer rId = selectedReservation.getId();
@@ -112,6 +126,10 @@ public class ReservationMgmtController {
         }
     }
 
+    /**
+     * Search button event handler
+     * @param actionEvent
+     */
     public void searchButtonPressed(ActionEvent actionEvent) {
         refreshReservations();
     }
