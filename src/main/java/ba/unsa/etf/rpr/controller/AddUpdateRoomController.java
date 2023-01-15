@@ -13,7 +13,10 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.NumberStringConverter;
-
+/**
+ * JavaFX controller class for creation and alteration of Room objects
+ * @author Eldar Babić
+ */
 public class AddUpdateRoomController {
 
     public Button okButton;
@@ -40,16 +43,15 @@ public class AddUpdateRoomController {
             }
         }
     }
-    private void exit(ActionEvent actionEvent){
-        Node n = (Node) actionEvent.getSource();
-        Stage s1 = (Stage) n.getScene().getWindow();
-        s1.close();
-    }
     public AddUpdateRoomController(Integer rId){this.rId = rId;}
     public Integer getrId() {
         return rId;
     }
 
+    /**
+     * OK button event handler
+     * @param actionEvent
+     */
     public void okPressed(ActionEvent actionEvent) {
         Room r = roomModel.toRoom();
         try {
@@ -66,8 +68,11 @@ public class AddUpdateRoomController {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * cancel button event handler
+     * @param actionEvent
+     */
     public void cancelPressed(ActionEvent actionEvent) {
-        exit(actionEvent);
+        addupdateGridPane.getScene().getWindow().hide();
     }
 }
