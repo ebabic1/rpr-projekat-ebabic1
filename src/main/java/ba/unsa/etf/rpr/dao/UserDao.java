@@ -15,11 +15,22 @@ public interface UserDao extends Dao<User> {
      */
     List<User> searchByCity(String cityName);
     /**
-     * Lists all guests from given country
+     * Lists all users from given country
      * @param countryName - city name
-     * @return list of guests
+     * @return list of user objects
      */
     List<User> searchByCountry(String countryName);
+    /**
+     * Lists all users with given name
+     * @param name - User name
+     * @return list of user objects
+     */
     List<User> searchByName(String name);
+
+    /**
+     * Lists all users with given username
+     * @param text username
+     * @return user object
+     */
     User getByUsername(String text);
 }
