@@ -15,8 +15,26 @@ public interface RoomDao extends Dao<Room> {
      * @return list of rooms
      */
     List<Room> searchByMaxPersons(int maxPersons);
+
+    /**
+     * Returns list of available/unavailable rooms
+     * @param available value 1/0
+     * @return list of rooms
+     */
     List<Room> searchByAvailable(int available);
+
+    /**
+     * Returns particular room identified by room number
+     * @param roomNumber room number
+     * @return room
+     * @throws SQLException when room is not found
+     */
     Room getByNumber(int roomNumber) throws SQLException;
 
-    public List<Room> searchByNumer(int number);
+    /**
+     * Returns list of rooms with given room number for populating table
+     * @param number
+     * @return list of rooms
+     */
+    public List<Room> searchByNumber(int number);
 }
