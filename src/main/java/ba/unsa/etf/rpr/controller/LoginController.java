@@ -1,7 +1,5 @@
 package ba.unsa.etf.rpr.controller;
-
 import ba.unsa.etf.rpr.dao.DaoFactory;
-import ba.unsa.etf.rpr.dao.UserDaoSQLImplementation;
 import ba.unsa.etf.rpr.domain.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,9 +13,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
-
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
-
+/**
+ * JavaFX controller class for login window
+ */
 public class LoginController {
     public Label wrongPasswordLabel;
     public Label userNotfoundLabel;
@@ -28,33 +27,35 @@ public class LoginController {
     public void initialize(){
         passwordField.getStyleClass().add("poljeNijeIspravno");
         usernameField.getStyleClass().add("poljeNijeIspravno");
-        usernameField.textProperty().addListener(new ChangeListener<String>() {
+        addFieldChangeListener(usernameField);
+        addFieldChangeListener(passwordField);
+    }
+
+    /**
+     * Adds change listener needed for setting passive indicators on text field
+     * @param field
+     */
+    private void addFieldChangeListener(TextField field) {
+        field.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (usernameField.getText().trim().isEmpty()){
-                    usernameField.getStyleClass().removeAll("poljeIspravno");
-                    usernameField.getStyleClass().add("poljeNijeIspravno");
+                if (field.getText().trim().isEmpty()){
+                    field.getStyleClass().removeAll("poljeIspravno");
+                    field.getStyleClass().add("poljeNijeIspravno");
                 }
                 else{
-                    usernameField.getStyleClass().removeAll("poljeNijeIspravno");
-                    usernameField.getStyleClass().add("poljeIspravno");
-                }
-            }
-        });
-        passwordField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (passwordField.getText().trim().isEmpty()){
-                    passwordField.getStyleClass().removeAll("poljeIspravno");
-                    passwordField.getStyleClass().add("poljeNijeIspravno");
-                }
-                else{
-                    passwordField.getStyleClass().removeAll("poljeNijeIspravno");
-                    passwordField.getStyleClass().add("poljeIspravno");
+                    field.getStyleClass().removeAll("poljeNijeIspravno");
+                    field.getStyleClass().add("poljeIspravno");
                 }
             }
         });
     }
+
+    /**
+     * Login button event handler. Retrieves user specified by usernameField and, if they exist, compares their password with one entered in passwordField
+     * @param actionEvent
+     * @throws IOException
+     */
     public void loginClicked(ActionEvent actionEvent) throws IOException {
         User u = null;
        if (usernameField.getText().trim().isEmpty() || passwordField.getText().trim().isEmpty()){
