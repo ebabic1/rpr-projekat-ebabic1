@@ -5,9 +5,6 @@ import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.User;
 import ba.unsa.etf.rpr.exceptions.UserException;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,14 +14,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
+/**
+ * JavaFX controller class for the guest management window
+ * @author Eldar Babić
+ */
 public class GuestMgmtController {
     public Button editButton;
     public Button addButton;
@@ -58,6 +55,10 @@ public class GuestMgmtController {
         refreshGuests();
     }
 
+    /**
+     * Opens window for guest editing or adding
+     * @param uId user id
+     */
     private void addupdateScene(Integer uId){
         try {
             Stage stage = new Stage();
@@ -66,9 +67,7 @@ public class GuestMgmtController {
             Parent root = loader.load();
             stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.setResizable(false);
-            stage.setOnHiding(event -> {
-                refreshGuests();
-            } );
+            stage.setOnHiding(event -> refreshGuests());
             if(uId != null) {
                 stage.setTitle("Edit a guest");
             }
@@ -80,6 +79,9 @@ public class GuestMgmtController {
         }
     }
 
+    /**
+     * Refreshes guest table
+     */
     private void refreshGuests()  {
         try {
             if(searchTextField.getText().trim().isEmpty()) guestsTabela.setItems(FXCollections.observableList(DaoFactory.userDao().getAll()));
@@ -91,6 +93,10 @@ public class GuestMgmtController {
 
     }
 
+    /**
+     * Edit button event handler
+     * @param actionEvent
+     */
     public void editButtonPressed(ActionEvent actionEvent) {
         User selectedGuest = (User) guestsTabela.getSelectionModel().getSelectedItem();
         Integer uId = selectedGuest.getId();
@@ -98,6 +104,10 @@ public class GuestMgmtController {
         addupdateScene(uId);
     }
 
+    /**
+     * Delete button event handler
+     * @param actionEvent
+     */
     public void deleteButtonPressed(ActionEvent actionEvent) {
         User selectedGuest = (User) guestsTabela.getSelectionModel().getSelectedItem();
         System.out.println(selectedGuest.getId());
@@ -110,17 +120,24 @@ public class GuestMgmtController {
         }
     }
 
+    /**
+     * Add button event handler
+     * @param actionEvent
+     */
     public void addButtonPressed(ActionEvent actionEvent) {
         addupdateScene(null);
     }
 
+    /**
+     * Check-in button event handler
+     * @param actionEvent
+     */
     public void checkInButtonPressed(ActionEvent actionEvent) {
         User selectedGuest = (User) guestsTabela.getSelectionModel().getSelectedItem();
         if(selectedGuest!=null)
         {
             Integer uId = selectedGuest.getId();
             try {
-
                 Stage stage = new Stage();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/addreservation.fxml"));
                 loader.setController(new AddUpdateReservationController(null,uId));
@@ -143,6 +160,10 @@ public class GuestMgmtController {
 
     }
 
+    /**
+     * Search button event handler
+     * @param actionEvent
+     */
     public void searchButtonPressed(ActionEvent actionEvent) {
         refreshGuests();
     }
