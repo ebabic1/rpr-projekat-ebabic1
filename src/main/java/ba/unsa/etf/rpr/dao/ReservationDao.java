@@ -17,5 +17,12 @@ public interface ReservationDao extends Dao<Reservation> {
      * @return List of dates
      */
     List<Reservation> searchByDateRange(Date startDate, Date endDate);
+
+    /**
+     * Returns reservation made by particular user
+     * @param id user ID
+     * @return Reservatoin
+     * @throws SQLException when user is not found
+     */
     Reservation searchByUser(int id) throws SQLException;
 }
