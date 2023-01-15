@@ -48,13 +48,20 @@ public class RoomDaoSQLImplementation extends AbstractDao<Room> implements RoomD
         String query = "SELECT * FROM Rooms WHERE available = ?";
         return getRooms(available, roomList, query);
     }
-    public List<Room> searchByNumer(int number){
+    @Override
+    public List<Room> searchByNumber(int number){
         List<Room> roomList = new ArrayList<>();
         String query = "SELECT * FROM Rooms WHERE roomNumber = ?";
         return getRooms(number, roomList, query);
     }
 
-    @Nullable
+    /**
+     * Method for populating room list
+     * @param available
+     * @param roomList
+     * @param query
+     * @return
+     */
     private List<Room> getRooms(int available, List<Room> roomList, String query) {
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
@@ -62,7 +69,8 @@ public class RoomDaoSQLImplementation extends AbstractDao<Room> implements RoomD
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()){
                 Room room = new Room();
-                room.setId(resultSet.getInt("roomId"));
+                room.setId(resultSet.getInt("id"));
+                room.setRoomNumber(resultSet.getInt("roomNumber"));
                 room.setMaxPersons(resultSet.getInt("maxPersons"));
                 room.setDescription(resultSet.getString("description"));
                 room.setAvailable(resultSet.getInt("available"));
