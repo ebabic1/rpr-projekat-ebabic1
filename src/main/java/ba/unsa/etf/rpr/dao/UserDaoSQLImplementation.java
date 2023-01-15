@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.User;
+import kotlin.OverloadResolutionByLambdaReturnType;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,6 +13,7 @@ public class UserDaoSQLImplementation extends AbstractDao<User> implements UserD
     public UserDaoSQLImplementation(){
         super("Users");
     }
+    @Override
     public User getByUsername(String username) {
         String query = "SELECT * FROM Users WHERE username = ?";
         try {
@@ -108,6 +110,12 @@ public class UserDaoSQLImplementation extends AbstractDao<User> implements UserD
         return getUsers(userList, query);
     }
 
+    /**
+     * Method for populating given userlist
+     * @param userList
+     * @param query
+     * @return
+     */
     private List<User> getUsers(List<User> userList, String query) {
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
