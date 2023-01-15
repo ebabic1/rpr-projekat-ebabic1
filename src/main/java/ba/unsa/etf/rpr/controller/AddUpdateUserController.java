@@ -16,7 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
- * Add / update form controller
+ * JavaFX controller class for creation and alteration of User objects
  * @author Eldar Babić
  */
 public class AddUpdateUserController {
@@ -68,6 +68,11 @@ public class AddUpdateUserController {
             }
         }
     }
+
+    /**
+     * OK button event handler
+     * @param actionEvent
+     */
     public void okPressed(ActionEvent actionEvent) {
         User u = userModel.toUser();
             try {
@@ -83,9 +88,12 @@ public class AddUpdateUserController {
                 new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
             }
     }
-
+    /**
+     * cancel button event handler
+     * @param actionEvent
+     */
     public void cancelPressed(ActionEvent actionEvent) {
-        exit(actionEvent);
+        addupdateGridPane.getScene().getWindow().hide();
     }
 }
 
