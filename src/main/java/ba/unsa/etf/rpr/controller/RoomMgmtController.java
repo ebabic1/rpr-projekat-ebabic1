@@ -1,11 +1,8 @@
 package ba.unsa.etf.rpr.controller;
-
 import ba.unsa.etf.rpr.business.RoomManager;
 import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.Room;
-import ba.unsa.etf.rpr.domain.User;
 import ba.unsa.etf.rpr.exceptions.RoomException;
-import ba.unsa.etf.rpr.exceptions.UserException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +17,10 @@ import java.sql.SQLException;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
+/**
+ * JavaFX controller class for room management
+ * @author Eldar Babić
+ */
 public class RoomMgmtController {
     public Button editButton;
     public Button addButton;
@@ -45,6 +46,11 @@ public class RoomMgmtController {
         roomNumberColumn.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
         refreshRooms();
     }
+
+    /**
+     * Opens window for room creation or alteration
+     * @param rId room ID
+     */
     private void addupdateScene(Integer rId) {
         try {
             Stage stage = new Stage();
@@ -66,6 +72,11 @@ public class RoomMgmtController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Edit button event handler
+     * @param actionEvent
+     */
     public void editButtonPressed(ActionEvent actionEvent) {
         Room selectedRoom = (Room) roomsTable.getSelectionModel().getSelectedItem();
         Integer rId = selectedRoom.getId();
@@ -74,10 +85,18 @@ public class RoomMgmtController {
         }
     }
 
+    /**
+     * Add button event handler
+     * @param actionEvent
+     */
     public void addButtonPressed(ActionEvent actionEvent) {
         addupdateScene(null);
     }
 
+    /**
+     * Delete button event handler
+     * @param actionEvent
+     */
     public void deleteButtonPressed(ActionEvent actionEvent) {
         Room selectedRoom = (Room) roomsTable.getSelectionModel().getSelectedItem();
         System.out.println(selectedRoom.getId());
@@ -89,13 +108,17 @@ public class RoomMgmtController {
             new Alert(Alert.AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
         }
     }
+
+    /**
+     * Refreshes rooms table based on search field contents
+     */
     private void refreshRooms() {
         try {
             if(searchTextField.getText().trim().isEmpty()) roomsTable.setItems(FXCollections.observableList(DaoFactory.roomDao().getAll()));
             else {
                 try {
                     Integer broj = Integer.parseInt(searchTextField.getText());
-                    roomsTable.setItems(FXCollections.observableList(DaoFactory.roomDao().searchByNumer(broj)));
+                    roomsTable.setItems(FXCollections.observableList(DaoFactory.roomDao().searchByNumber(broj)));
 
                 } catch (NumberFormatException e) {
 
@@ -107,6 +130,10 @@ public class RoomMgmtController {
         }
     }
 
+    /**
+     * Search button event handler
+     * @param actionEvent
+     */
     public void searchButtonPressed(ActionEvent actionEvent) {
         refreshRooms();
     }
