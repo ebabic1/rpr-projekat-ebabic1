@@ -15,14 +15,15 @@ import java.io.IOException;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
+/**
+ * JavaFX controller class for the guest dashboard window, which only displays guest name and reserved room
+ */
 public class GuestDashboardController {
     @FXML
     public Label nameLabel;
     @FXML
     public Label roomNoLabel;
     public Button logoutButton;
-
-
     public void logoutClicked(ActionEvent actionEvent) throws IOException {
         Node n = (Node) actionEvent.getSource();
         Stage s1 = (Stage) n.getScene().getWindow();
