@@ -6,26 +6,24 @@ import ba.unsa.etf.rpr.business.UserManager;
 import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.Reservation;
 import ba.unsa.etf.rpr.domain.Room;
-import ba.unsa.etf.rpr.domain.User;
 import ba.unsa.etf.rpr.exceptions.ReservationException;
 import ba.unsa.etf.rpr.exceptions.RoomException;
 import ba.unsa.etf.rpr.exceptions.UserException;
 import ba.unsa.etf.rpr.model.ReservationModel;
 import ba.unsa.etf.rpr.model.UserModel;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
+/**
+ * JavaFX controller class for creation and alteration of Reservation objects
+ * @author Eldar Babić
+ */
 public class AddUpdateReservationController {
     public Label firstNameLabel;
     public Label lastNameLabel;
@@ -72,42 +70,11 @@ public class AddUpdateReservationController {
         leaveDatePicker.valueProperty().bindBidirectional(reservationModel.leaveDateProperty());
         arrivalDatePicker.setValue(LocalDate.now());
         leaveDatePicker.setValue(LocalDate.now());
-       arrivalDatePicker.valueProperty().addListener((obs,o,n) ->{
-            long daysBetween = ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),leaveDatePicker.getValue());
-           if(roomId != null && (daysBetween < 0 || ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),LocalDate.now()) > 0 || ChronoUnit.DAYS.between(leaveDatePicker.getValue(),LocalDate.now())>0))  {
-                priceLabel.getStyleClass().removeAll("poljeIspravno");
-                priceLabel.getStyleClass().add("poljeNijeIspravno");
-                priceLabel.setText("Dates incorrect!");
-            }
-            else{
-                try {
-                    if(roomId != null)
-                        priceLabel.setText(String.valueOf(daysBetween* DaoFactory.roomDao().getById(roomId).getPrice()));
-                    priceLabel.getStyleClass().removeAll("poljeNijeIspravno");
-                    priceLabel.getStyleClass().add("poljeIspravno");
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-       });
-        leaveDatePicker.valueProperty().addListener((obs,o,n) ->{
-            long daysBetween = ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),leaveDatePicker.getValue());
-            if(roomId != null && (daysBetween < 0 || ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),LocalDate.now()) > 0 || ChronoUnit.DAYS.between(leaveDatePicker.getValue(),LocalDate.now())>0))  {
-                priceLabel.getStyleClass().removeAll("poljeIspravno");
-                priceLabel.getStyleClass().add("poljeNijeIspravno");
-                priceLabel.setText("Dates incorrect!");
-            }
-            else{
-                try {
-                    if(roomId != null)
-                        priceLabel.setText(String.valueOf(daysBetween* DaoFactory.roomDao().getById(roomId).getPrice()));
-                    priceLabel.getStyleClass().removeAll("poljeNijeIspravno");
-                    priceLabel.getStyleClass().add("poljeIspravno");
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        addDateChangeListener(arrivalDatePicker);
+        addDateChangeListener(leaveDatePicker);
+        /**
+        *   Adds a listener needed for proper calcultation of reservation price based on selected room number
+        */
         roomNumberComboBox.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 try {
@@ -150,6 +117,36 @@ public class AddUpdateReservationController {
             }
         }
     }
+
+    /**
+     * adds a listener needed for app-side date range validation and price calculation
+     * @param arrivalDatePicker
+     */
+    private void addDateChangeListener(DatePicker arrivalDatePicker) {
+        arrivalDatePicker.valueProperty().addListener((obs, o, n) ->{
+             long daysBetween = ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),leaveDatePicker.getValue());
+            if(roomId != null && (daysBetween < 0 || ChronoUnit.DAYS.between(arrivalDatePicker.getValue(), LocalDate.now()) > 0 || ChronoUnit.DAYS.between(leaveDatePicker.getValue(),LocalDate.now())>0))  {
+                 priceLabel.getStyleClass().removeAll("poljeIspravno");
+                 priceLabel.getStyleClass().add("poljeNijeIspravno");
+                 priceLabel.setText("Dates incorrect!");
+             }
+             else{
+                 try {
+                     if(roomId != null)
+                         priceLabel.setText(String.valueOf(daysBetween* DaoFactory.roomDao().getById(roomId).getPrice()));
+                     priceLabel.getStyleClass().removeAll("poljeNijeIspravno");
+                     priceLabel.getStyleClass().add("poljeIspravno");
+                 } catch (SQLException e) {
+                     throw new RuntimeException(e);
+                 }
+             }
+        });
+    }
+
+    /**
+     * OK button event handler
+     * @param actionEvent
+     */
     public void okPressed(ActionEvent actionEvent) {
         if(roomId != null)
         try {
@@ -172,6 +169,10 @@ public class AddUpdateReservationController {
         }
     }
 
+    /**
+     * cancel button event handler
+     * @param actionEvent
+     */
     public void cancelPressed(ActionEvent actionEvent) {
         addupdateGridPane.getScene().getWindow().hide();
     }
