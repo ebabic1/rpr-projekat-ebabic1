@@ -31,6 +31,12 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
             }
         }
     }
+
+    /**
+     * Helper method for creating INSERT statements
+     * @param row map of attribute names and values
+     * @return key,value entry eg. (id, firstName, lastName, ...) ?,?,?, ...
+     */
     private Map.Entry<String,String> prepareInsertParts(Map<String,Object> row) {
         StringBuilder columns = new StringBuilder();
         StringBuilder questions = new StringBuilder();
@@ -62,7 +68,21 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
             return object;
 
     }
+
+    /**
+     * Method for mapping ResultSet into Object
+     * @param resultSet
+     * @return specified table Bean
+     * @throws SQLException
+     */
     public abstract T rowToObject(ResultSet resultSet) throws SQLException;
+
+    /**
+     * Method for mapping Object into Map
+     * @param object bean
+     * @return key,value map of Object
+     * @throws SQLException
+     */
     public abstract Map<String,Object> objectToRow(T object) throws SQLException;
     @Override
     public T add(T item) throws SQLException {
