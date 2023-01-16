@@ -12,14 +12,11 @@ import java.util.*;
  *
  */
 public abstract class AbstractDao<T extends IDable> implements Dao<T> {
-    protected Connection connection = null;
+    protected static Connection connection = null;
     private String tableName;
-    public Connection getConnection() {
-        return connection;
-    }
     public AbstractDao(String tableName) {
+        this.tableName = tableName;
         if(connection == null){
-            this.tableName = tableName;
             try {
                 final Properties login = new Properties();
                 login.load(new FileInputStream("src/main/java/ba/unsa/etf/rpr/login.properties"));
@@ -84,6 +81,13 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
      * @throws SQLException
      */
     public abstract Map<String,Object> objectToRow(T object) throws SQLException;
+
+    /**
+     * Adds item to database
+     * @param item - item to be added
+     * @return
+     * @throws SQLException
+     */
     @Override
     public T add(T item) throws SQLException {
         Map<String,Object> row = objectToRow(item);
@@ -110,6 +114,13 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
             throw new SQLException(e);
         }
     }
+
+    /**
+     * Updates item in database
+     * @param item - item to be updated
+     * @return
+     * @throws SQLException
+     */
     @Override
     public T update(T item) throws SQLException {
         Map<String,Object> row = objectToRow(item);
@@ -128,6 +139,11 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
         return item;
     }
 
+    /**
+     * Deletes item with given id from database
+     * @param id - id of item to be deleted
+     * @throws SQLException
+     */
     @Override
     public void delete(int id) throws SQLException{
         String query = "DELETE FROM " + tableName + " WHERE id = ?";
@@ -136,6 +152,11 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
         stmt.executeUpdate();
 
     }
+
+    /**
+     * Gets all items from referenced table
+     * @return List of items
+     */
     @Override
     public List<T> getAll() {
         String query = "SELECT * FROM " + tableName;
