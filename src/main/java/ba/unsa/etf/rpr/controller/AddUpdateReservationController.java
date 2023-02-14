@@ -73,7 +73,7 @@ public class AddUpdateReservationController {
         addDateChangeListener(arrivalDatePicker);
         addDateChangeListener(leaveDatePicker);
         /**
-        *   Adds a listener needed for proper calcultation of reservation price based on selected room number
+        *   Adds a listener needed for proper calculation of reservation price based on selected room number
         */
         roomNumberComboBox.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             try {
