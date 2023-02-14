@@ -1,8 +1,6 @@
 package ba.unsa.etf.rpr.controller;
 import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.User;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,17 +34,14 @@ public class LoginController {
      * @param field
      */
     private void addFieldChangeListener(TextField field) {
-        field.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (field.getText().trim().isEmpty()){
-                    field.getStyleClass().removeAll("poljeIspravno");
-                    field.getStyleClass().add("poljeNijeIspravno");
-                }
-                else{
-                    field.getStyleClass().removeAll("poljeNijeIspravno");
-                    field.getStyleClass().add("poljeIspravno");
-                }
+        field.textProperty().addListener((observableValue, o, n) -> {
+            if (field.getText().trim().isEmpty()){
+                field.getStyleClass().removeAll("poljeIspravno");
+                field.getStyleClass().add("poljeNijeIspravno");
+            }
+            else{
+                field.getStyleClass().removeAll("poljeNijeIspravno");
+                field.getStyleClass().add("poljeIspravno");
             }
         });
     }
@@ -63,7 +58,6 @@ public class LoginController {
         }
         u = DaoFactory.userDao().getByUsername(usernameField.getText());
         if (u == null){
-            System.out.println("Korisnik nije nađen");
             userNotfoundLabel.setVisible(true);
             usernameField.getStyleClass().removeAll("poljeIspravno");
             usernameField.getStyleClass().add("poljeNijeIspravno");
