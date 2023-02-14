@@ -80,7 +80,7 @@ public class GuestMgmtController {
     }
 
     /**
-     * Refreshes guest table based on search field conents
+     * Refreshes guest table based on search field contents
      */
     private void refreshGuests()  {
         try {
