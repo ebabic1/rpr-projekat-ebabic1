@@ -5,6 +5,7 @@ import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.User;
 import ba.unsa.etf.rpr.exceptions.UserException;
 import ba.unsa.etf.rpr.model.UserModel;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,6 +15,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.apache.commons.validator.routines.EmailValidator;
+
+import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * JavaFX controller class for creation and alteration of User objects
@@ -60,6 +67,17 @@ public class AddUpdateUserController {
         usernameField.textProperty().bindBidirectional(userModel.usernameFieldProperty());
         passwordField.textProperty().bindBidirectional(userModel.passwordFieldProperty());
         phoneField.textProperty().bindBidirectional(userModel.phoneFieldProperty());
+        try {
+            Set<String> set1 = new HashSet<String>();
+            Set<String> set2 = new HashSet<String>();
+            List<User> list = DaoFactory.userDao().getAll();
+            list.stream().forEach(entry -> set1.add(entry.getCity()));
+            list.stream().forEach(entry -> set2.add(entry.getCountry()));
+            cityComboBox.getItems().addAll(FXCollections.observableSet(set1));
+            countryComboBox.getItems().addAll(FXCollections.observableSet(set2));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         if (uId != null) {
             try {
                 userModel.fromUser(userManager.getById(uId));
@@ -75,18 +93,26 @@ public class AddUpdateUserController {
      */
     public void okPressed(ActionEvent actionEvent) {
         User u = userModel.toUser();
-            try {
-                if (uId != null) {
-                    u.setId(uId);
-                    userManager.update(u);
-                } else {
+        try {
+            if (uId != null) {
+                u.setId(uId);
+                userManager.update(u);
+                addupdateGridPane.getScene().getWindow().hide();
+            } else {
+                if(EmailValidator.getInstance().isValid(String.valueOf(emailField.textProperty()))) {
                     u.setAdmin(0);
                     userManager.add(u);
+                    addupdateGridPane.getScene().getWindow().hide();
                 }
-                addupdateGridPane.getScene().getWindow().hide();
-            } catch (UserException e) {
-                new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
+                else{
+                    emailField.getStyleClass().removeAll("poljeIspravno");
+                    emailField.getStyleClass().add("poljeNijeIspravno");
+                }
             }
+
+        } catch (UserException e) {
+            new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
+        }
     }
     /**
      * cancel button event handler
