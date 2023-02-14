@@ -99,14 +99,52 @@ public class AddUpdateUserController {
                 userManager.update(u);
                 addupdateGridPane.getScene().getWindow().hide();
             } else {
-                if(EmailValidator.getInstance().isValid(emailField.textProperty().getValue())) {
+                Boolean flag = true;
+                System.out.println(firstNameField.textProperty().getValue());
+                if (firstNameField.textProperty().getValue().trim().length() == 0) {
+                    firstNameField.getStyleClass().removeAll("poljeIspravno");
+                    firstNameField.getStyleClass().add("poljeNijeIspravno");
+                    flag = false;
+                }
+                if (lastNameField.textProperty().getValue().trim().length() == 0) {
+                    lastNameField.getStyleClass().removeAll("poljeIspravno");
+                    lastNameField.getStyleClass().add("poljeNijeIspravno");
+                    flag = false;
+                }
+                if (usernameField.textProperty().getValue().trim().length() == 0) {
+                    usernameField.getStyleClass().removeAll("poljeIspravno");
+                    usernameField.getStyleClass().add("poljeNijeIspravno");
+                    flag = false;
+                }
+                if (passwordField.textProperty().getValue().trim().length() == 0) {
+                    passwordField.getStyleClass().removeAll("poljeIspravno");
+                    passwordField.getStyleClass().add("poljeNijeIspravno");
+                    flag = false;
+                }
+                if (cityComboBox.valueProperty().getValue().toString().trim().length() == 0) {
+                    cityComboBox.getStyleClass().removeAll("poljeIspravno");
+                    cityComboBox.getStyleClass().add("poljeNijeIspravno");
+                    flag = false;
+                }
+                if (countryComboBox.valueProperty().getValue().toString().trim().length() == 0) {
+                    countryComboBox.getStyleClass().removeAll("poljeIspravno");
+                    countryComboBox.getStyleClass().add("poljeNijeIspravno");
+                    flag = false;
+                }
+                if (phoneField.textProperty().getValue().trim().length() == 0) {
+                    phoneField.getStyleClass().removeAll("poljeIspravno");
+                    phoneField.getStyleClass().add("poljeNijeIspravno");
+                    flag = false;
+                }
+                if(!EmailValidator.getInstance().isValid(emailField.textProperty().getValue())) {
+                    emailField.getStyleClass().removeAll("poljeIspravno");
+                    emailField.getStyleClass().add("poljeNijeIspravno");
+                    flag = false;
+                }
+                if (flag){
                     u.setAdmin(0);
                     userManager.add(u);
                     addupdateGridPane.getScene().getWindow().hide();
-                }
-                else{
-                    emailField.getStyleClass().removeAll("poljeIspravno");
-                    emailField.getStyleClass().add("poljeNijeIspravno");
                 }
             }
 
