@@ -1,9 +1,6 @@
 package ba.unsa.etf.rpr.dao;
 import ba.unsa.etf.rpr.domain.Room;
-import org.jetbrains.annotations.Nullable;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
@@ -84,6 +81,12 @@ public class RoomDaoSQLImplementation extends AbstractDao<Room> implements RoomD
         return null;
     }
 
+    /**
+     * Gets room by room number
+     * @param roomNumber room number
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Room getByNumber(int roomNumber) throws SQLException {
         String query = "SELECT * FROM Rooms WHERE roomNumber = ?";
