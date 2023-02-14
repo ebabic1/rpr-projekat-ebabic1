@@ -79,7 +79,6 @@ public class AddUpdateReservationController {
             try {
                 try {
                     roomId = DaoFactory.roomDao().getByNumber(Integer.parseInt(newValue)).getId();
-                    System.out.println(roomId);
                 } catch (NumberFormatException e){
                     throw new RoomException("Invalid room number");
                 } catch (SQLException e) {
@@ -124,7 +123,7 @@ public class AddUpdateReservationController {
      */
     private void addDateChangeListener(DatePicker arrivalDatePicker) {
         arrivalDatePicker.valueProperty().addListener((obs, o, n) ->{
-             long daysBetween = ChronoUnit.DAYS.between(arrivalDatePicker.getValue(),leaveDatePicker.getValue());
+             int daysBetween = (int)Math.abs(leaveDatePicker.getValue().toEpochDay()-arrivalDatePicker.getValue().toEpochDay());
             if(roomId != null && (daysBetween < 0 || ChronoUnit.DAYS.between(arrivalDatePicker.getValue(), LocalDate.now()) > 0 || ChronoUnit.DAYS.between(leaveDatePicker.getValue(),LocalDate.now())>0))  {
                  priceLabel.getStyleClass().removeAll("poljeIspravno");
                  priceLabel.getStyleClass().add("poljeNijeIspravno");
@@ -133,9 +132,11 @@ public class AddUpdateReservationController {
              else{
                  try {
                      if(roomId != null)
+                     {
                          priceLabel.setText(String.valueOf(daysBetween* DaoFactory.roomDao().getById(roomId).getPrice()));
-                     priceLabel.getStyleClass().removeAll("poljeNijeIspravno");
-                     priceLabel.getStyleClass().add("poljeIspravno");
+                         priceLabel.getStyleClass().removeAll("poljeNijeIspravno");
+                         priceLabel.getStyleClass().add("poljeIspravno");
+                     }
                  } catch (SQLException e) {
                      throw new RuntimeException(e);
                  }
