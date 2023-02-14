@@ -18,7 +18,7 @@ public interface RoomDao extends Dao<Room> {
 
     /**
      * Returns list of available/unavailable rooms
-     * @param available value 1/0
+     * @param available value where 1 - available, 0 - not available
      * @return list of rooms
      */
     List<Room> searchByAvailable(int available);
