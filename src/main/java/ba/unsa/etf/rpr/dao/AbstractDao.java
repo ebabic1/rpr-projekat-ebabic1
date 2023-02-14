@@ -107,9 +107,8 @@ public abstract class AbstractDao<T extends IDable> implements Dao<T> {
             item.setId(rs.getInt(1));
             return item;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SQLException(e);
         }
-        return item;
     }
     @Override
     public T update(T item) throws SQLException {
