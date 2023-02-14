@@ -23,13 +23,15 @@ public class App {
     private static final Option getUsers = new Option("getUs", "get-users",false, "Printing all users from database");
     private static final Option getRooms = new Option("getRm", "get-rooms",false, "Printing all rooms from database");
     private static final Option getReservations = new Option("getRe", "get-reservations",false, "Printing all reservations from database");
-    private static final Option addUser = new Option("addus","add-user",false,"Adding a user to the database");
-    private static final Option addRoom = new Option("addrm","add-room",false,"Adding a room to the database");
-    private static final Option addReservation = new Option("addrs","add-reservation",false,"Adding a reservation to the database");
-    private static final Option updateUser = new Option("updateus","update-user",false,"Updating a user in the database");
-    private static final Option updateRoom = new Option("updaterm","update-room",false,"Updating a room in the database");
-    private static final Option updateReservation = new Option("updaters","update-reservation",false,"Updating a reservation in the database");
-
+    private static final Option addUser = new Option("addUs","add-user",false,"Adding a user to the database");
+    private static final Option addRoom = new Option("addRm","add-room",false,"Adding a room to the database");
+    private static final Option addReservation = new Option("addRs","add-reservation",false,"Adding a reservation to the database");
+    private static final Option updateUser = new Option("updateUs","update-user",false,"Updating a user in the database");
+    private static final Option updateRoom = new Option("updateRm","update-room",false,"Updating a room in the database");
+    private static final Option updateReservation = new Option("updateRs","update-reservation",false,"Updating a reservation in the database");
+    private static final Option deleteUser = new Option("delUs", "delete-user",true, "Deleting user...");
+    private static final Option deleteReservation = new Option("delRs", "delete-reservation",true, "Deleting reservation...");
+    private static final Option deleteRoom = new Option("delRm", "delete-room",true, "Deleting room...");
     public static Options addOptions() {
         Options options = new Options();
         options.addOption(getReservations);
@@ -41,6 +43,9 @@ public class App {
         options.addOption(updateUser);
         options.addOption(updateReservation);
         options.addOption(updateRoom);
+        options.addOption(deleteUser);
+        options.addOption(deleteReservation);
+        options.addOption(deleteRoom);
         return options;
     }
     public static void printFormattedOptions(Options options) {
@@ -64,7 +69,44 @@ public class App {
         }
         else if(commandLine.hasOption(getUsers.getOpt()) || commandLine.hasOption(getUsers.getLongOpt())){
             UserManager userManager = new UserManager();
-            userManager.getAll().forEach(System.out::println);
+            userManager.getAll().forEach(entry-> {System.out.println(entry.getId() + " " + entry.getFirstName() + " " + entry.getLastName());});
+        }
+        else if(commandLine.hasOption(deleteUser.getOpt()) || commandLine.hasOption(deleteUser.getLongOpt())){
+            UserManager userManager = new UserManager();
+            try {
+                String s = commandLine.getOptionValue(deleteUser.getOpt());
+                userManager.delete(Integer.parseInt(s));
+                System.out.println("User " + s + " deleted!");
+            } catch (UserException e) {
+                System.out.println("Database error");
+            } catch (NumberFormatException e) {
+                System.out.println("Formatting error");
+            }
+        }
+        else if(commandLine.hasOption(deleteReservation.getOpt()) || commandLine.hasOption(deleteReservation.getLongOpt())){
+            ReservationManager reservationManager = new ReservationManager();
+            try {
+                String s = commandLine.getOptionValue(deleteReservation.getOpt());
+                reservationManager.delete(Integer.parseInt(s));
+                System.out.println("Reservation " + s + " deleted!");
+            } catch (ReservationException e) {
+                System.out.println("Database error");
+            } catch (NumberFormatException e) {
+                System.out.println("Formatting error");
+            }
+        }
+        else if(commandLine.hasOption(deleteRoom.getOpt()) || commandLine.hasOption(deleteRoom.getLongOpt())){
+            RoomManager roomManager = new RoomManager();
+            try {
+                String s = commandLine.getOptionValue(deleteRoom.getOpt());
+                roomManager.delete(DaoFactory.roomDao().getByNumber(Integer.parseInt(s)).getId());
+                System.out.println("Room " + s + " deleted!");
+            } catch (NumberFormatException e) {
+                System.out.println("Formatting error");
+            }
+            catch (Exception e){
+                System.out.println("Database error");
+            }
         }
         else if(commandLine.hasOption(updateUser.getOpt()) || commandLine.hasOption(updateUser.getLongOpt())) {
             Scanner s = new Scanner(System.in);
@@ -132,19 +174,19 @@ public class App {
         else if(commandLine.hasOption(updateRoom.getOpt()) || commandLine.hasOption(updateRoom.getLongOpt())){
             Scanner s = new Scanner(System.in);
             Room r = null;
-            System.out.println("Room to update(id): ");
+            System.out.print("Room to update(id): ");
             try {
-                r = DaoFactory.roomDao().getById(s.nextInt());
+                r = DaoFactory.roomDao().getById(DaoFactory.roomDao().getByNumber(s.nextInt()).getId()); s.nextLine();
                 System.out.print("Room number: " + r.getRoomNumber() + "\n New room number: ");
-                int roomNumber = s.nextInt();
+                int roomNumber = s.nextInt(); s.nextLine();
                 r.setRoomNumber(roomNumber);
-                System.out.print("Max persons: " + r.getRoomNumber() + "\n New max persons: ");
-                int maxPersons = s.nextInt();
+                System.out.print("Max persons: " + r.getMaxPersons() + "\n New max persons: ");
+                int maxPersons = s.nextInt(); s.nextLine();
                 r.setMaxPersons(maxPersons);
-                System.out.print("Price: " + r.getRoomNumber() + "\n New price: ");
-                double price = s.nextDouble();
+                System.out.print("Price: " + r.getPrice() + "\n New price: ");
+                double price = s.nextDouble(); s.nextLine();
                 r.setPrice(price);
-                System.out.print("Description: " + r.getRoomNumber() + "\n New description: ");
+                System.out.print("Description: " + r.getDescription() + "\n New description: ");
                 String description = s.nextLine();
                 r.setDescription(description);
                 RoomManager roomManager = new RoomManager();
@@ -161,17 +203,18 @@ public class App {
             Scanner s = new Scanner(System.in);
             Room r = new Room();
             System.out.print("Room number: ");
-            int roomNumber = s.nextInt();
+            int roomNumber = s.nextInt(); s.nextLine();
             r.setRoomNumber(roomNumber);
+            System.out.println("Description: ");
+            String description = s.nextLine();
+            r.setDescription(description);
             System.out.print("Max persons: ");
             int maxPersons = s.nextInt();
             r.setMaxPersons(maxPersons);
             System.out.print("Price: ");
             double price = s.nextDouble();
             r.setPrice(price);
-            System.out.println("Description: ");
-            String description = s.nextLine();
-            r.setDescription(description);
+            r.setAvailable(1);
             RoomManager roomManager = new RoomManager();
             try {
                 roomManager.add(r);
