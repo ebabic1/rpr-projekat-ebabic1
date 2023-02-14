@@ -99,7 +99,7 @@ public class AddUpdateUserController {
                 userManager.update(u);
                 addupdateGridPane.getScene().getWindow().hide();
             } else {
-                if(EmailValidator.getInstance().isValid(String.valueOf(emailField.textProperty()))) {
+                if(EmailValidator.getInstance().isValid(emailField.textProperty().getValue())) {
                     u.setAdmin(0);
                     userManager.add(u);
                     addupdateGridPane.getScene().getWindow().hide();
