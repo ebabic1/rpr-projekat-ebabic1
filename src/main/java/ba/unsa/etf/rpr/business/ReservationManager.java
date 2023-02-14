@@ -13,6 +13,11 @@ import java.time.temporal.Temporal;
 import java.util.List;
 
 public class ReservationManager {
+    /**
+     * Method for date validation
+     * @param r Reservation object
+     * @throws ReservationException when reservation arrivalDate is after leave date, before today, or if leave date is before today
+     */
     public void validateDate(Reservation r) throws ReservationException {
         long daysBetween = ChronoUnit.DAYS.between(r.getArrivalDate().toLocalDate(),r.getLeaveDate().toLocalDate());
         if (daysBetween < 0) throw new ReservationException("Dates invalid, arrival date cannot be after leave date!");
@@ -21,6 +26,12 @@ public class ReservationManager {
         daysBetween = ChronoUnit.DAYS.between(r.getLeaveDate().toLocalDate(),LocalDate.now());
         if(daysBetween > 0) throw new ReservationException("Dates invalid, leave date cannot be before today");
     }
+
+    /**
+     * Deletes reservation from database by ID
+     * @param id - reservationId
+     * @throws ReservationException
+     */
     public void delete(int id) throws ReservationException {
         try {
             Room reservedRoom = DaoFactory.roomDao().getById(DaoFactory.reservationDao().getById(id).getRoom().getId());
@@ -31,6 +42,13 @@ public class ReservationManager {
             throw new ReservationException(e.getMessage());
         }
     }
+
+    /**
+     * Adds reservation to database
+     * @param r Reservation object
+     * @return added Reservation
+     * @throws ReservationException
+     */
     public Reservation add(Reservation r) throws ReservationException {
         try {
             validateDate(r);
@@ -50,6 +68,13 @@ public class ReservationManager {
         }
         return r;
     }
+
+    /**
+     * Updates reservation given by parameter
+     * @param r Reservation
+     * @return
+     * @throws ReservationException
+     */
     public Reservation update(Reservation r) throws ReservationException {
         try {
             validateDate(r);
@@ -58,6 +83,12 @@ public class ReservationManager {
             throw new ReservationException(e.getMessage());
         }
     }
+
+    /**
+     * Gets all reservations from database
+     * @return List of Reservation objects
+     * @throws ReservationException
+     */
     public List<Reservation> getAll() throws ReservationException {
         try {
             return DaoFactory.reservationDao().getAll();
@@ -65,6 +96,13 @@ public class ReservationManager {
             throw new ReservationException(e.getMessage());
         }
     }
+
+    /**
+     * Gets reservation from database by reservationId
+     * @param rId reservationId
+     * @return reservation with given ID
+     * @throws ReservationException
+     */
     public Reservation getById(int rId) throws ReservationException {
         try {
             return DaoFactory.reservationDao().getById(rId);
