@@ -113,7 +113,7 @@ public class App {
             User u = null;
             System.out.println("User to update (id): ");
             try {
-                u = DaoFactory.userDao().getById(s.nextInt());
+                u = DaoFactory.userDao().getById(s.nextInt()); s.nextLine();
                 System.out.print("First name: " + u.getFirstName() + "\nnew first name: ");
                 u.setFirstName(s.nextLine());
                 System.out.print("Last name: " + u.getLastName() + "\nnew last name: ");
@@ -146,17 +146,17 @@ public class App {
             Reservation r = null;
             System.out.println("Reservation to update (id):");
             try {
-                r = DaoFactory.reservationDao().getById(s.nextInt());
-                System.out.print("Arrival date (dd-mm-yyyy): " + r.getArrivalDate() + "\n New arrival date:");
+                r = DaoFactory.reservationDao().getById(s.nextInt());s.nextLine();
+                System.out.print("Arrival date (dd-mm-yyyy): " + r.getArrivalDate() + "\n New arrival date: ");
                 String[] n =  s.nextLine().split("-");
                 r.setArrivalDate(Date.valueOf(LocalDate.of(Integer.parseInt(n[2]),Integer.parseInt(n[1]),Integer.parseInt(n[0]))));
-                System.out.print("Leave date (dd-mm-yyyy): " + r.getLeaveDate() + "\n New leave date:");
+                System.out.print("Leave date (dd-mm-yyyy): " + r.getLeaveDate() + "\n New leave date: ");
                 n =  s.nextLine().split("-");
                 r.setLeaveDate(Date.valueOf(LocalDate.of(Integer.parseInt(n[2]),Integer.parseInt(n[1]),Integer.parseInt(n[0]))));
-                System.out.print("User ID: " + r.getUser().getId() + "\n New user Id");
-                r.setUser(DaoFactory.userDao().getById(s.nextInt()));
-                System.out.print("Room number: " + r.getRoom().getRoomNumber());
-                r.setRoom(DaoFactory.roomDao().getByNumber(s.nextInt()));
+                System.out.print("User ID: " + r.getUser().getId() + "\n New user Id: ");
+                r.setUser(DaoFactory.userDao().getById(s.nextInt()));s.nextLine();
+                System.out.print("Room number: " + r.getRoom().getRoomNumber() + "\nNew room number: ");
+                r.setRoom(DaoFactory.roomDao().getByNumber(s.nextInt()));s.nextLine();
                 System.out.println("Additional info: " + r.getAdditionalInfo() + "\n New additional info: ");
                 r.setAdditionalInfo(s.nextLine());
                 ReservationManager reservationManager = new ReservationManager();
@@ -209,10 +209,10 @@ public class App {
             String description = s.nextLine();
             r.setDescription(description);
             System.out.print("Max persons: ");
-            int maxPersons = s.nextInt();
+            int maxPersons = s.nextInt(); s.nextLine();
             r.setMaxPersons(maxPersons);
             System.out.print("Price: ");
-            double price = s.nextDouble();
+            double price = s.nextDouble();s.nextLine();
             r.setPrice(price);
             r.setAvailable(1);
             RoomManager roomManager = new RoomManager();
